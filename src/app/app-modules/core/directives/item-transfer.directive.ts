@@ -35,6 +35,7 @@ import {
 } from '@angular/forms';
 // import { TransferSearchComponent } from '../components/transfer-search/transfer-search.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TransferSearchComponent } from '../components/transfer-search/transfer-search.component';
 
 @Directive({
   selector: '[appItemTransfer]',
@@ -65,44 +66,44 @@ export class ItemTransferDirective {
     const transferTo =
       this.stockForm?.parent?.parent?.value.transferTo.facilityID;
 
-    // const dialogRef = this.dialog.open(TransferSearchComponent, {
-    //   // width: '80%',
-    //   // height: '90%',
-    //   panelClass: 'fit-screen',
-    //   data: {
-    //     searchTerm: searchTerm,
-    //     transferTo: transferTo,
-    //     addedStock: this.previousSelected,
-    //   },
-    // });
+    const dialogRef = this.dialog.open(TransferSearchComponent, {
+      // width: '80%',
+      // height: '90%',
+      panelClass: 'fit-screen',
+      data: {
+        searchTerm: searchTerm,
+        transferTo: transferTo,
+        addedStock: this.previousSelected,
+      },
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     const formArray = this.stockForm.parent as FormArray;
-    //     const len = formArray.length;
-    //     for (let i = len - 1, j = 0; i < len + result.length - 1; i++, j++) {
-    //       (<FormGroup>formArray.at(i)).controls['itemStockEntryID'].setValue(
-    //         result[j].itemStockEntryID,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['batchNo'].setValue(
-    //         result[j].batchNo,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['qoh'].setValue(
-    //         result[j].quantityInHand,
-    //       );
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const formArray = this.stockForm.parent as FormArray;
+        const len = formArray.length;
+        for (let i = len - 1, j = 0; i < len + result.length - 1; i++, j++) {
+          (<FormGroup>formArray.at(i)).controls['itemStockEntryID'].setValue(
+            result[j].itemStockEntryID,
+          );
+          (<FormGroup>formArray.at(i)).controls['batchNo'].setValue(
+            result[j].batchNo,
+          );
+          (<FormGroup>formArray.at(i)).controls['qoh'].setValue(
+            result[j].quantityInHand,
+          );
 
-    //       (<FormGroup>formArray.at(i)).controls['itemName'].setValue(
-    //         result[j].item.itemName,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['itemName'].disable();
-    //       (<FormGroup>formArray.at(i)).controls['quantity'].enable();
-    //       (<FormGroup>formArray.at(i)).markAsDirty();
+          (<FormGroup>formArray.at(i)).controls['itemName'].setValue(
+            result[j].item.itemName,
+          );
+          (<FormGroup>formArray.at(i)).controls['itemName'].disable();
+          (<FormGroup>formArray.at(i)).controls['quantity'].enable();
+          (<FormGroup>formArray.at(i)).markAsDirty();
 
-    //       if (formArray.length < len + result.length - 1)
-    //         formArray.push(this.createItem());
-    //     }
-    //   }
-    // });
+          if (formArray.length < len + result.length - 1)
+            formArray.push(this.createItem());
+        }
+      }
+    });
   }
 
   createItem() {

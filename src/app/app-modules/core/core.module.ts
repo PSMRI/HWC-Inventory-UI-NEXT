@@ -113,6 +113,22 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonDialogComponent } from './components/common-dialog/common-dialog.component';
+import { AppFooterComponent } from './components/app-footer/app-footer.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SetLanguageComponent } from './components/set-language.component';
+import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { ShowCommitAndVersionDetailsComponent } from './components/show-commit-and-version-details/show-commit-and-version-details.component';
+import { ItemSearchComponent } from './components/item-search/item-search.component';
+import { BatchAdjustmentComponent } from './components/batch-adjustment/batch-adjustment.component';
+import { BatchSearchComponent } from './components/batch-search/batch-search.component';
+import { BeneficiaryDetailsComponent } from './components/beneficiary-details/beneficiary-details.component';
+import { IndentItemListComponent } from './components/indent-item-list/indent-item-list.component';
+import { ItemDispenseComponent } from './components/item-dispense/item-dispense.component';
+import { SearchComponent } from './components/search/search.component';
+import { TextareaDialogComponent } from './components/textarea-dialog/textarea-dialog.component';
+import { TransferSearchComponent } from './components/transfer-search/transfer-search.component';
+import { TextareaDialog } from './components/textarea-dialog/textarea-dialog.service';
+import { RxBatchViewComponent } from './components/rx-batch-view/rx-batch-view.component';
 
 
 
@@ -148,53 +164,52 @@ import { CommonDialogComponent } from './components/common-dialog/common-dialog.
   ],
   declarations: [
     CommonDialogComponent,
-    // TextareaDialogComponent,
-    // SpinnerComponent,
-    // AppFooterComponent,
-    // AppHeaderComponent,
+    TextareaDialogComponent,
+    SpinnerComponent,
+    AppFooterComponent,
+    AppHeaderComponent,
     myEmailDirective,
     myMobileNumberDirective,
-    // SetLanguageComponent,
+    SetLanguageComponent,
     myNameDirective,
     myPasswordDirective,
     StringValidatorDirective,
     NullDefaultValueDirective,
     NumberValidatorDirective,
     DisableFormControlDirective,
-    // ItemSearchComponent,
+    ItemSearchComponent,
     ItemSearchDirective,
     MinNumberValidatorDirective,
-    // TransferSearchComponent,
+    TransferSearchComponent,
     ItemTransferDirective,
-    // BatchSearchComponent,
+    BatchSearchComponent,
     BatchSearchDirective,
     ItemDispenseDirective,
-    // ItemDispenseComponent,
-    // SearchComponent,
-    // SetLanguageComponent,
+    ItemDispenseComponent,
+    SearchComponent,
     ISTDatePipe,
     BatchAdjustmentDirective,
-    // BatchAdjustmentComponent,
-    // BeneficiaryDetailsComponent,
-    // RxBatchViewComponent,
+    BatchAdjustmentComponent,
+    BeneficiaryDetailsComponent,
+    RxBatchViewComponent,
     IndentRequestDirective,
-    // IndentItemListComponent,
+    IndentItemListComponent,
     IndentDispenseDirective,
-    // ShowCommitAndVersionDetailsComponent
+    ShowCommitAndVersionDetailsComponent
   ],
   exports: [
     MaterialModule,
     // Md2Module,
     CommonDialogComponent,
-    // TextareaDialogComponent,
-    // SpinnerComponent,
-    // SetLanguageComponent,
+    TextareaDialogComponent,
+    SpinnerComponent,
+    SetLanguageComponent,
     ReactiveFormsModule,
-    // AppFooterComponent,
-    // AppHeaderComponent,
+    AppFooterComponent,
+    AppHeaderComponent,
     // Ng2GoogleChartsModule,
     myEmailDirective,
-    // SetLanguageComponent,
+    SetLanguageComponent,
     myMobileNumberDirective,
     myNameDirective,
     myPasswordDirective,
@@ -203,21 +218,21 @@ import { CommonDialogComponent } from './components/common-dialog/common-dialog.
     NumberValidatorDirective,
     MinNumberValidatorDirective,
     NullDefaultValueDirective,
-    // ItemSearchComponent,
+    ItemSearchComponent,
     ItemSearchDirective,
-    // TransferSearchComponent,
+    TransferSearchComponent,
     ItemTransferDirective,
     ItemDispenseDirective,
-    // BatchSearchComponent,
+    BatchSearchComponent,
     BatchSearchDirective,
     ISTDatePipe,
-    // BatchAdjustmentComponent,
+    BatchAdjustmentComponent,
     BatchAdjustmentDirective,
-    // BeneficiaryDetailsComponent,
+    BeneficiaryDetailsComponent,
     IndentRequestDirective,
-    // IndentItemListComponent,
+    IndentItemListComponent,
     IndentDispenseDirective,
-    // ShowCommitAndVersionDetailsComponent
+    ShowCommitAndVersionDetailsComponent
   ],
   // entryComponents: [
   //   CommonDialogComponent,
@@ -242,7 +257,7 @@ export class CoreModule {
       providers: [
         ConfirmationService,
         BatchViewService,
-        // TextareaDialog,
+        TextareaDialog,
         AuthGuard,
         SpinnerService,
         CommonService,

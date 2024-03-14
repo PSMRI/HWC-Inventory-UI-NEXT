@@ -203,7 +203,7 @@ export class LoginComponent implements OnInit {
             apimanClientKey: item.apimanClientKey,
           };
         }
-         return null;
+         return;
       })
       if (services.length > 0) {
         localStorage.setItem('services', JSON.stringify(services));

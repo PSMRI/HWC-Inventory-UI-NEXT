@@ -39,8 +39,8 @@ export class BeneficiaryDetailsService {
       .post(url, { beneficiaryRegID: beneficiaryRegID, benFlowID: benFlowID })
       .subscribe({
         next: (res: any) => {
-          if (res.json().data) {
-            this.beneficiaryDetails.next(res.json().data);
+          if (res.data) {
+            this.beneficiaryDetails.next(res.data);
           }
         },
         error: (err) => {

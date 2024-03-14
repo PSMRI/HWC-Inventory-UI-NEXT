@@ -29,6 +29,7 @@ import {
 // import { BatchAdjustmentComponent } from '../components/batch-adjustment/batch-adjustment.component';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { BatchAdjustmentComponent } from '../components/batch-adjustment/batch-adjustment.component';
 
 @Directive({
   selector: '[appBatchAdjustment]',
@@ -59,45 +60,45 @@ export class BatchAdjustmentDirective {
     const searchTerm = this.stockForm.value.itemName;
     console.log('SEACHTEREM', searchTerm);
 
-    // const dialogRef = this.dialog.open(BatchAdjustmentComponent, {
-    //   // width: '80%',
-    //   // height: '90%',
-    //   panelClass: 'fit-screen',
-    //   data: { searchTerm: searchTerm, addedStock: this.previousSelected },
-    // });
+    const dialogRef = this.dialog.open(BatchAdjustmentComponent, {
+      width: '80%',
+      height: '90%',
+      panelClass: 'fit-screen',
+      data: { searchTerm: searchTerm, addedStock: this.previousSelected },
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     const formArray = this.stockForm.parent as FormArray;
-    //     const len = formArray.length;
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const formArray = this.stockForm.parent as FormArray;
+        const len = formArray.length;
 
-    //     console.log(formArray + ' ' + len);
+        console.log(formArray + ' ' + len);
 
-    //     for (let i = len - 1, j = 0; i < len + result.length - 1; i++, j++) {
-    //       (<FormGroup>formArray.at(i)).controls['itemStockEntryID'].setValue(
-    //         result[j].itemStockEntryID,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['batchID'].setValue(
-    //         result[j].batchNo,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['itemID'].setValue(
-    //         result[j].item.itemID,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['itemName'].setValue(
-    //         result[j].item.itemName,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['quantityInHand'].setValue(
-    //         result[j].quantityInHand,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['itemName'].disable();
-    //       // (<FormGroup>formArray.at(i)).controls['quantity'].enable();
-    //       (<FormGroup>formArray.at(i)).markAsDirty();
+        for (let i = len - 1, j = 0; i < len + result.length - 1; i++, j++) {
+          (<FormGroup>formArray.at(i)).controls['itemStockEntryID'].setValue(
+            result[j].itemStockEntryID,
+          );
+          (<FormGroup>formArray.at(i)).controls['batchID'].setValue(
+            result[j].batchNo,
+          );
+          (<FormGroup>formArray.at(i)).controls['itemID'].setValue(
+            result[j].item.itemID,
+          );
+          (<FormGroup>formArray.at(i)).controls['itemName'].setValue(
+            result[j].item.itemName,
+          );
+          (<FormGroup>formArray.at(i)).controls['quantityInHand'].setValue(
+            result[j].quantityInHand,
+          );
+          (<FormGroup>formArray.at(i)).controls['itemName'].disable();
+          // (<FormGroup>formArray.at(i)).controls['quantity'].enable();
+          (<FormGroup>formArray.at(i)).markAsDirty();
 
-    //       if (formArray.length < len + result.length - 1)
-    //         formArray.push(this.initStockAdjustmentList());
-    //     }
-    //   }
-    // });
+          if (formArray.length < len + result.length - 1)
+            formArray.push(this.initStockAdjustmentList());
+        }
+      }
+    });
   }
 
   initStockAdjustmentList() {

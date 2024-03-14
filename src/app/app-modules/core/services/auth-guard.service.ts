@@ -23,10 +23,11 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRoute } from '@angular/router';
 // import { SetLanguageComponent } from '../components/set-language.component';
 import { LanguageService } from './language.service';
+import { SetLanguageComponent } from '../components/set-language.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  // languageComponent!: SetLanguageComponent;
+  languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 
   constructor(
@@ -49,10 +50,10 @@ export class AuthGuard implements CanActivate {
 
   // AV40085804 29/09/2021 Integrating Multilingual Functionality -----Start-----
 
-  // fetchLanguageResponse() {
-  //   this.languageComponent = new SetLanguageComponent(this.http_service);
-  //   this.languageComponent.setLanguage();
-  //   this.currentLanguageSet = this.languageComponent.currentLanguageObject;
-  // }
+  fetchLanguageResponse() {
+    this.languageComponent = new SetLanguageComponent(this.http_service);
+    this.languageComponent.setLanguage();
+    this.currentLanguageSet = this.languageComponent.currentLanguageObject;
+  }
   // -----End------
 }

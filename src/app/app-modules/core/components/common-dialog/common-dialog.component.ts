@@ -29,6 +29,7 @@ import {
 import { LanguageService } from '../../services/language.service';
 // import { SetLanguageComponent } from '../set-language.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { SetLanguageComponent } from '../set-language.component';
 
 @Component({
   selector: 'app-common-dialog',
@@ -60,7 +61,7 @@ export class CommonDialogComponent implements OnInit {
   public selectedValue: any;
   // Choose from Radio Button Ends
 
-  // languageComponent!: SetLanguageComponent;
+  languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 
   constructor(
@@ -117,9 +118,9 @@ export class CommonDialogComponent implements OnInit {
   }
 
   fetchLanguageResponse() {
-    // this.languageComponent = new SetLanguageComponent(this.http_service);
-    // this.languageComponent.setLanguage();
-    // this.currentLanguageSet = this.languageComponent.currentLanguageObject;
+    this.languageComponent = new SetLanguageComponent(this.http_service);
+    this.languageComponent.setLanguage();
+    this.currentLanguageSet = this.languageComponent.currentLanguageObject;
   }
   // -----End------
 }

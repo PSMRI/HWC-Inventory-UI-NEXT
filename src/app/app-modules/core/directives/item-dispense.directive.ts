@@ -31,6 +31,7 @@ import { NgControl, FormGroup } from '@angular/forms';
 
 // import { ItemDispenseComponent } from './../components/item-dispense/item-dispense.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ItemDispenseComponent } from '../components/item-dispense/item-dispense.component';
 
 @Directive({
   selector: '[appItemDispense]',
@@ -60,21 +61,21 @@ export class ItemDispenseDirective {
 
     console.log(this.stockForm);
 
-    // const dialogRef = this.dialog.open(ItemDispenseComponent, {
-    //   // width: '80%',
-    //   // height: '90%',
-    //   panelClass: 'fit-screen',
-    //   data: { searchTerm: searchTerm, dispenseItemList: this.dispenseItemList },
-    // });
+    const dialogRef = this.dialog.open(ItemDispenseComponent, {
+      // width: '80%',
+      // height: '90%',
+      panelClass: 'fit-screen',
+      data: { searchTerm: searchTerm, dispenseItemList: this.dispenseItemList },
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     this.stockForm.controls['itemName'].setValue(result.item.itemName);
-    //     this.stockForm.controls['quantityInHand'].setValue(
-    //       result.quantityInHand,
-    //     );
-    //     this.stockForm.controls['itemID'].setValue(result.item.itemID);
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.stockForm.controls['itemName'].setValue(result.item.itemName);
+        this.stockForm.controls['quantityInHand'].setValue(
+          result.quantityInHand,
+        );
+        this.stockForm.controls['itemID'].setValue(result.item.itemID);
+      }
+    });
   }
 }
