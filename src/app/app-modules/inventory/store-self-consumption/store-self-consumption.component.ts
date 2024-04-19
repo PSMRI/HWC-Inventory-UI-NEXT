@@ -33,6 +33,7 @@ import {
 import { LanguageService } from '../../core/services/language.service';
 import { SetLanguageComponent } from '../../core/components/set-language.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 export interface PeriodicElement {
   itemName: string;
@@ -65,13 +66,20 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     'quantity',
     'delete',
   ];
+  private subs: Subscription;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private http_service: LanguageService,
     private inventoryService: InventoryService,
     private alertService: ConfirmationService,
-  ) {}
+  ) {
+    this.subs = this.inventoryService
+      .getDialogClosedObservable()
+      .subscribe(() => {
+        this.loadStockConsumptionData();
+      });
+  }
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
@@ -80,11 +88,10 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
     this.providerServiceMapID = localStorage.getItem('providerServiceID');
 
-    if (this.facilityID == null || this.facilityID <= 0) {
+    if (this.facilityID === null || this.facilityID <= 0) {
       this.router.navigate(['/inventory']);
     }
 
-    // this.storeSelfConsumptionForm = this.createStoreSelfConsumptionForm();
     this.storeSelfConsumptionForm = this.fb.group({
       referenceNumber: [''],
       dispenseReason: [''],
@@ -92,7 +99,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     });
     this.initDispensedStock();
     this.loadStockConsumptionData();
-    // this.dataSource = new MatTableDataSource<any>(this.storeSelfTableData());
   }
   loadStockConsumptionData() {
     const dataFromFun: any = this.storeSelfTableData();
@@ -109,7 +115,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     return this.fb.group({
       referenceNumber: null,
       dispenseReason: null,
-      // dispensedStock: new FormArray([this.initDispensedStock()]),
     });
   }
 
@@ -159,7 +164,7 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
       }
     }
     else{
-      return false;
+      return;
     }
   }
 
@@ -172,7 +177,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
 
     if (stockForm.length > 1) {
       stockForm.removeAt(index);
-      // stockForm.clear();
       this.loadStockConsumptionData();
     } else {
       if (stock) {
@@ -206,12 +210,9 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
       vanID: localStorage.getItem('vanID'),
       parkingPlaceID: localStorage.getItem('parkingPlaceID'),
     };
-
-    // console.log("Self Stock Consumption", JSON.stringify(requestBody, null, 4));
-
     this.inventoryService.storeSelfConsumption(requestBody).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.alertService.alert(
             this.currentLanguageSet.inventory.savedsuccessfully,
             'success',
@@ -256,8 +257,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
   }
 
   removeAllDispensedStock(dispensedStockArray: FormArray) {
-    // let len = dispensedStockArray.length;
-    // for (let i = 0; i < len - 1; i++) {
     while (dispensedStockArray.length > 1) {
       dispensedStockArray.removeAt(0);
     }

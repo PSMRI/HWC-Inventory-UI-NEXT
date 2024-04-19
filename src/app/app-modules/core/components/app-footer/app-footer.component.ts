@@ -22,7 +22,6 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { SetLanguageComponent } from '../set-language.component';
-// import { SetLanguageComponent } from '../set-language.component';
 
 @Component({
   selector: 'app-footer',

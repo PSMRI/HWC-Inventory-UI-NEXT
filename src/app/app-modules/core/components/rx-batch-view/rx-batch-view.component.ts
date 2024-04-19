@@ -23,14 +23,15 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormArray,
-  FormControl,
   FormGroup,
   AbstractControl,
+  FormControl,
 } from '@angular/forms';
 import { ConfirmationService } from './../../services/confirmation.service';
 import { LanguageService } from '../../services/language.service';
 import { SetLanguageComponent } from '../set-language.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-rx-batch-view',
   templateUrl: './rx-batch-view.component.html',
@@ -39,7 +40,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class RxBatchViewComponent implements OnInit, DoCheck {
   public items: any;
   public prescribed: any;
-  public editSelection!: number;
+  public editSelection!: any;
   dispensed: any;
   itemsForm!: FormGroup;
   alertDays = 30;
@@ -60,6 +61,7 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
 
   loadtoForm(items: any) {
     const formArray = this.initBatchListArray(items, this.editSelection);
+    console.log('this.editSelection', this.editSelection);
     this.itemsForm?.addControl('formArray', formArray);
     this.setDispensed(formArray.value);
   }
@@ -69,6 +71,7 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
     formArray.map((arr: any) => (quantity += +arr.quantity));
     console.log(quantity, ' quant');
     console.log(formArray);
+    const formItemsTick = <FormArray>this.itemsForm?.controls['formArray'];
     if (quantity <= this.prescribed) {
       this.dispensed = quantity;
     } else if (index >= 0) {
@@ -82,11 +85,12 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
         quantity: null,
       });
     }
+    formItemsTick.at(index).get('selection')?.disable();
   }
 
   checkQuant(formArrayVals: any, index: any) {
     console.log(formArrayVals, index);
-    if (index != -1) {
+    if (index !== -1) {
       if (
         formArrayVals[index].quantity === '' ||
         formArrayVals[index].quantity === null ||
@@ -96,18 +100,28 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
       ) {
         const formItems = <FormArray>this.itemsForm.controls['formArray'];
         formItems.at(index).patchValue({ selection: false });
+      } else {
+        const formItems = <FormArray>this.itemsForm.controls['formArray'];
+        formItems.at(index).patchValue({ selection: true });
+        formItems.at(index).get('selection')?.disable();
       }
     }
   }
 
   save() {
     const formItems = <FormArray>this.itemsForm.controls['formArray'];
-
     if (!formItems.invalid) {
+      console.log('formItems1', formItems.value);
+      formItems.value.forEach((item: any) => {
+        const newExpDate: any = new Date(item.expiryDate);
+        console.log('newExpDate', newExpDate);
+        item.expiryDate = newExpDate;
+      });
+      console.log('formItems2', formItems.value);
       this.dialogRef.close({
         selectionBatchList: formItems.value,
         batchList: formItems.value.filter(
-          (item: any) => item.selection == true,
+          (item: any) => item.selection === true,
         ),
         dispensed: this.dispensed > 0 ? this.dispensed : null,
       });
@@ -144,14 +158,20 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
   }
 
   initBatchListElement(batch: any, selection: any): FormGroup {
+    const expDate: any = new DatePipe('en-US');
+
+    const formatedExpDate: any = expDate.transform(
+      batch.expiryDate,
+      'MM/dd/yyyy',
+    );
     return this.fb.group({
-      expiryDate: batch.expiryDate,
+      expiryDate: formatedExpDate,
       batchNo: batch.batchNo,
       quantity: batch.quantity,
       quantityInHand: batch.qty || batch.quantityInHand,
       expiresIn: batch.expiresIn,
       itemStockEntryID: batch.itemStockEntryID,
-      selection: batch.selection || selection == '1' ? true : false,
+      selection: batch.selection || selection === '1' ? true : false,
     });
   }
 
@@ -175,7 +195,10 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
   }
 
   getRxBatch(): AbstractControl[] | null {
-    const getRxBatch = this.itemsForm.get('formArray');
+    const getRxBatch = this.itemsForm.get('formArray') as FormArray;
+    if (getRxBatch) {
+      getRxBatch.get('selection')?.disable();
+    }
     return getRxBatch instanceof FormArray ? getRxBatch.controls : null;
   }
   // -----End------

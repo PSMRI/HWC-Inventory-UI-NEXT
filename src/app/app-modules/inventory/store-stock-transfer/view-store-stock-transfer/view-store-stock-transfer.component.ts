@@ -19,13 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  DoCheck,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { ViewStoreStockTransferDetailsComponent } from './view-store-stock-transfer-details/view-store-stock-transfer-details.component';
 import { Location } from '@angular/common';
 import { InventoryService } from '../../shared/service/inventory.service';
@@ -82,10 +76,6 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
     this._minDate.setFullYear(this._today.getFullYear() - 1);
     this._dateRange[0] = this._today;
     this._dateRange[1] = this._today;
-
-    // const date = new Date(); // Now
-    // date.setDate(date.getDate() - 30);
-    // this._dateRange = [date, new Date()]
     console.log(this._dateRange, 'dateRange');
   }
 
@@ -171,11 +161,11 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
       this._stockEntryList.forEach((item) => {
         for (const key in item) {
           if (
-            key == 'refNo' ||
-            key == 'stockTransferID' ||
-            key == 'transferFromFacility' ||
-            key == 'transferToFacility' ||
-            key == 'createdBy'
+            key === 'refNo' ||
+            key === 'stockTransferID' ||
+            key === 'transferFromFacility' ||
+            key === 'transferToFacility' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
@@ -202,15 +192,15 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
     if (stockEntryResponse) {
       const mdDialogRef: MatDialogRef<ViewStoreStockTransferDetailsComponent> =
         this.dialog.open(ViewStoreStockTransferDetailsComponent, {
-          // height: '90%',
-          width: '80%',
+          width: '1200px',
+          height: 'auto',
           panelClass: 'fit-screen',
           data: { stockEntry: entry, entryDetails: stockEntryResponse },
           disableClose: false,
         });
       mdDialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          if (result.print != null && result.print == true) {
+          if (result.print !== null && result.print === true) {
             if (result.print) {
               const printableData = this.createPrintableData(
                 entry,
@@ -236,7 +226,7 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
       'stockEntryResponse',
       JSON.stringify(stockEntryResponse, null, 4),
     );
-    stockEntryResponse.forEach((batch: any) => {
+    stockEntryResponse.data.forEach((batch: any) => {
       i = i + 1;
       const consumedBatch = {
         sNo: i,

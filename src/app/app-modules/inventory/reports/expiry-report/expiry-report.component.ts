@@ -20,9 +20,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import * as XLSX from 'xlsx';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 
@@ -50,7 +48,7 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
   ) {}
   today!: Date;
   minEndDate!: Date;
-  maxDate: any;
+  maxDate!: Date;
   maxEndDate!: Date;
   expiryList = [];
   dateOffset: any;
@@ -61,7 +59,6 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
 
     this.dateOffset = 24 * 60 * 60 * 1000;
-    // this.maxEndDate = new Date(this.today.setTime(this.today.getTime()));
     this.maxEndDate = new Date();
     this.maxEndDate.setDate(this.today.getDate() - 1);
   }
@@ -84,7 +81,7 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
   checkEndDate() {
     console.log('', this.startDate);
 
-    if (this.endDate == null) {
+    if (this.endDate === null) {
       this.minEndDate = new Date(this.startDate);
       console.log('new Date(this.today.getDate() - 1);', new Date(this.today));
     } else {
@@ -130,7 +127,7 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
           'Json data of response: ',
           JSON.stringify(response, null, 4),
         );
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.expiryList = response.data;
           this.getResponseOfSearchThenDo();
         }
@@ -138,7 +135,7 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
   }
 
   downloadReport(downloadFlag: boolean) {
-    if (downloadFlag == true) {
+    if (downloadFlag === true) {
       this.searchReport();
     }
   }
@@ -153,13 +150,13 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
     if (criteria.length > 0) {
       const criteriaArray = criteria.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (criteriaArray.length != 0) {
+      if (criteriaArray.length !== 0) {
         this.criteriaHead = Object.keys(criteriaArray[0]);
         console.log('this.criteriaHead', this.criteriaHead);
       }
@@ -167,13 +164,13 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
     if (this.expiryList.length > 0) {
       const array = this.expiryList.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (array.length != 0) {
+      if (array.length !== 0) {
         const head = Object.keys(array[0]);
         console.log(' head', head);
         const wb_name = 'Expiry Report';
@@ -191,7 +188,7 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
           }
           const cellPosition = String.fromCharCode(j);
           let finalCellName: any;
-          if (count == 0) {
+          if (count === 0) {
             finalCellName = cellPosition + '1';
             console.log(finalCellName);
           } else {
@@ -202,7 +199,7 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
           const newName = this.modifyHeader(head, i);
           // delete report_worksheet[finalCellName].w; report_worksheet[finalCellName].v = newName;
           i++;
-          if (i == 91 + count * 26) {
+          if (i === 91 + count * 26) {
             // i = 65;
             count++;
           }

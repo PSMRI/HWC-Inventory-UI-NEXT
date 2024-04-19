@@ -27,13 +27,7 @@ import {
   EventEmitter,
   DoCheck,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  FormArray,
-  AbstractControl,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { InventoryService } from './../../shared/service/inventory.service';
 import { ConfirmationService } from './../../../core/services/confirmation.service';
 import { DataStorageService } from './../../shared/service/data-storage.service';
@@ -66,6 +60,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   displayedColumns: string[] = [
+    'sNo',
     'itemName',
     'quantity',
     'totalCostPrice',
@@ -83,7 +78,6 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
-    // this.systemDispenseForm = this.createSystemDispenseForm();
     this.systemDispenseForm = this.fb.group({
       systemItemDispenseList: this.fb.array([]),
     });
@@ -163,7 +157,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     this.systemItemDispenseList.push(this.initSystemDispenseForm());
     this.loadSystemMedicineData();
   }
-  removeItem(i: any, itemForm: FormGroup) {
+  removeItem(index: any, itemForm: FormGroup) {
     const stockForm = this.systemDispenseForm.get(
       'systemItemDispenseList',
     ) as FormArray;
@@ -171,7 +165,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     console.log('stock', itemForm);
 
     if (stockForm.length > 1) {
-      stockForm.removeAt(i);
+      stockForm.removeAt(index);
       // stockForm.clear();
       this.loadSystemMedicineData();
     } else {
@@ -180,17 +174,6 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
         itemForm.controls['itemName'].enable();
       }
     }
-
-    const systemItemDispenseList = <FormArray>(
-      this.systemDispenseForm.controls['systemItemDispenseList']
-    );
-    console.log('systemItemDispenseList.length', systemItemDispenseList.length);
-    if (systemItemDispenseList.length == 1 && !!itemForm) {
-      this.systemDispenseForm.reset();
-      console.log('here');
-    } else {
-      systemItemDispenseList.removeAt(i);
-    }
   }
 
   allocateBatch() {
@@ -198,7 +181,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     console.log('itemList', JSON.stringify(itemList, null, 4));
     this.inventoryService.allocateBatch(itemList).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           if (response.data.length > 0) {
             const itemBatchList = response.data;
             this.openModalToShowBatchList(itemBatchList);
@@ -239,9 +222,9 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
           console.log('resuklt', result);
           if (result.result) {
             console.log('result.result', result.result);
-            if (result.result.statusCode == 200) {
+            if (result.result.statusCode === 200) {
               console.log('result.result.statusCode', result.result.statusCode);
-              if (result.print != null && result.print == true) {
+              if (result.print !== null && result.print === true) {
                 const printableData = this.createPrintableData(
                   result.issuedBatchList,
                 );

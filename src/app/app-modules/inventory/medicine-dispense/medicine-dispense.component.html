@@ -28,10 +28,13 @@
 
     <div class="col-xs-12">
       <mat-card class="m-t-20 m-b-40">
-        <form [formGroup]="beneficiaryDetailForm" autocomplete="off">
+        <form [formGroup]="beneficiaryDetailForm" autocomplete="off" novalidate>
           <div class="row medicineAlign">
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
+                <mat-label>{{
+                  currentLanguageSet?.bendetails?.beneficiaryID
+                }}</mat-label>
                 <input
                   matInput
                   appDefaultNull
@@ -40,17 +43,14 @@
                   name="beneficiaryID"
                   id="beneficiaryID"
                   formControlName="beneficiaryID"
-                  placeholder="{{
-                    currentLanguageSet?.bendetails?.beneficiaryID
-                  }}"
                   (keyup)="checkBeneficiary()"
                 />
               </mat-form-field>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field style="width: 100%; line-height: 4px !important">
-                <label class="control-label" htmlFor="visitInvCode"
-                  >{{ currentLanguageSet?.itemDispense?.visitcode }}:</label
+                <mat-label class="control-label" htmlFor="visitInvCode"
+                  >{{ currentLanguageSet?.itemDispense?.visitcode }}:</mat-label
                 >
                 <mat-select
                   id="visitInvCode"
@@ -73,14 +73,16 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
+                <mat-label>{{
+                  currentLanguageSet?.bendetails?.visitDate
+                }}</mat-label>
                 <input
                   matInput
                   [matDatepicker]="visitDatePicker"
                   name="visitDate"
-                  id="visitDate"
+                  autocomplete="off"
                   formControlName="visitDate"
-                  placeholder="{{ currentLanguageSet?.bendetails?.visitDate }}"
-                  [disabled]="true"
+                  [readonly]="true"
                 />
                 <mat-datepicker-toggle
                   matPrefix
@@ -91,6 +93,9 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
+                <mat-label>{{
+                  currentLanguageSet?.inventory?.patientName
+                }}</mat-label>
                 <input
                   matInput
                   appDefaultNull
@@ -99,12 +104,12 @@
                   id="beneficiaryName"
                   formControlName="beneficiaryName"
                   [readonly]="true"
-                  placeholder="{{ currentLanguageSet?.inventory?.patientName }}"
                 />
               </mat-form-field>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
+                <mat-label>{{ currentLanguageSet?.bendetails?.age }}</mat-label>
                 <input
                   matInput
                   appDefaultNull
@@ -113,12 +118,14 @@
                   id="beneficiaryAge"
                   formControlName="beneficiaryAge"
                   [readonly]="true"
-                  placeholder="{{ currentLanguageSet?.bendetails?.age }}"
                 />
               </mat-form-field>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
+                <mat-label>{{
+                  currentLanguageSet?.bendetails?.gender
+                }}</mat-label>
                 <input
                   matInput
                   appDefaultNull
@@ -127,12 +134,14 @@
                   id="genderName"
                   formControlName="genderName"
                   [readonly]="true"
-                  placeholder="{{ currentLanguageSet?.bendetails?.gender }}"
                 />
               </mat-form-field>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
+                <mat-label>{{
+                  currentLanguageSet?.inventory?.doctorName
+                }}</mat-label>
                 <input
                   matInput
                   appDefaultNull
@@ -140,13 +149,15 @@
                   name="doctorName"
                   id="doctorName"
                   formControlName="doctorName"
-                  placeholder="{{ currentLanguageSet?.inventory?.doctorName }}"
                   [readonly]="true"
                 />
               </mat-form-field>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
+                <mat-label>{{
+                  currentLanguageSet?.inventory?.remarks
+                }}</mat-label>
                 <input
                   matInput
                   appDefaultNull
@@ -155,17 +166,17 @@
                   id="reference"
                   formControlName="reference"
                   maxlength="50"
-                  placeholder="{{ currentLanguageSet?.inventory?.remarks }}"
-                  [disabled]="!beneficiaryDetailForm.get('visitCode')?.value"
+                  [readonly]="!dateBool"
                 />
               </mat-form-field>
             </div>
-            <div class="col-xs-12 col-sm-6 box">
+            <div class="col-4" style="margin-left: 15px">
               <mat-label class="control-label" for="medicineDispenseType"
                 >{{ currentLanguageSet?.inventory?.typeofDispense }}:</mat-label
               >
               <div class="clearfix"></div>
               <mat-radio-group
+                class="radio_btn_fontsize"
                 id="medicineDispenseType"
                 name="medicineDispenseType"
                 formControlName="medicineDispenseType"
@@ -174,7 +185,7 @@
               >
                 <mat-radio-button
                   color="primary"
-                  class="radio-btn"
+                  class="radio_btn_fontsize"
                   value="Manual"
                   >{{
                     currentLanguageSet?.inventory?.manualDispense
@@ -182,7 +193,7 @@
                 >
                 <mat-radio-button
                   color="primary"
-                  class="radio-btn"
+                  class="radio_btn_fontsize"
                   value="System"
                   >{{
                     currentLanguageSet?.inventory?.systemDispense

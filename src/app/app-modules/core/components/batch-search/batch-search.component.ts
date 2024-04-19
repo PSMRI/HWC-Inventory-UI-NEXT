@@ -23,8 +23,7 @@ import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { BatchSearchService } from '../../services/batch-search.service';
 import { ConfirmationService } from '../../services/confirmation.service';
 
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -61,15 +60,27 @@ export class BatchSearchComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items$ = this.batchSearchService.searchItemBatch(term);
-    this.items$.subscribe((data) => {
-      if (data) {
-        this.dataSource.data = data.data;
-        this.dataSource.paginator = this.paginator;
-        this.noRecordsFlag = true;
-      } else {
-        this.noRecordsFlag = false;
-      }
-    });
+    if (term === '%%') {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    } else if (term) {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    }
   }
 
   selectBatch(event: any, batch: any) {
@@ -86,7 +97,7 @@ export class BatchSearchComponent implements OnInit, DoCheck {
   disableSelection(batch: any) {
     const addedStock = this.input.addedStock;
     const temp = addedStock.filter(
-      (stock: any) => stock.itemStockEntryID == batch.itemStockEntryID,
+      (stock: any) => stock.itemStockEntryID === batch.itemStockEntryID,
     );
     if (temp.length > 0) return true;
     else return false;

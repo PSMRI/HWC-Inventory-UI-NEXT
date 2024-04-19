@@ -22,8 +22,7 @@
 import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { ItemSearchService } from '../../services/item-search.service';
 
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -53,7 +52,7 @@ export class ItemSearchComponent implements OnInit, DoCheck {
     'strength',
     'action',
   ];
-  // dataSource!: MatTableDataSource<any>;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
     public http_service: LanguageService,
@@ -67,15 +66,27 @@ export class ItemSearchComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items$ = this.itemSearchService.searchDrugItem(term);
-    this.items$.subscribe((data) => {
-      if (data) {
-        this.dataSource.data = data.data;
-        this.dataSource.paginator = this.paginator;
-        this.noRecordsFlag = true;
-      } else {
-        this.noRecordsFlag = false;
-      }
-    });
+    if (term === '%%') {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    } else if (term) {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    }
   }
 
   // AV40085804 29/09/2021 Integrating Multilingual Functionality -----Start-----

@@ -19,15 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  DoCheck,
-} from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
 import { ViewMedicineDispenseDetailsComponent } from './view-medicine-dispense-details/view-medicine-dispense-details.component';
-import * as moment from 'moment';
 import { Location } from '@angular/common';
 import { InventoryService } from '../../shared/service/inventory.service';
 import { DataStorageService } from './../../shared/service/data-storage.service';
@@ -36,6 +29,7 @@ import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-la
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-medicine-dispense',
@@ -51,12 +45,12 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
 
   _dispenseList: any = [];
   _filteredDispenseList = new MatTableDataSource<any>();
-  // _filteredDispenseList: any = [];
   blankTable = [1, 2, 3, 4, 5];
   filterTerm: any;
   searched = false;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     private location: Location,
@@ -79,9 +73,6 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
     this._dateRange[0] = this._today;
     this._dateRange[1] = this._today;
     this._minDate.setFullYear(this._today.getFullYear() - 1);
-    // const date = new Date(); // Now
-    // date.setDate(date.getDate() - 30);
-    // this._dateRange = [date, new Date()]
     console.log(this._dateRange, 'dateRange');
   }
 
@@ -126,43 +117,43 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
   }
 
   updateDate() {
-    // if (this._dateRange[0] != this._dateRangePrevious[0] || this._dateRange[1] != this._dateRangePrevious[1]) {
     this._dateRangePrevious = this._dateRange;
-    // console.log(JSON.stringify(this._dateRange, null, 4), 'callservice');
     this.getPastDispense();
-
-    // }
   }
 
   loadDispense(dispenseObject: any) {
     console.log(dispenseObject);
-    // if (dispenseObject) {
-    //   dispenseObject.forEach(element => {
-    //     element.createdDate = moment(element.createdDate).utc().format('DD/MM/YYYY HH:mm') || 'Not Available'
-
-    //   });
-    // }
     this._dispenseList = dispenseObject.data;
     this._filteredDispenseList.data = dispenseObject.data;
+    this._filteredDispenseList.paginator = this.paginator;
     this.filterTerm = '';
   }
 
   filterConsumptionList(searchTerm: string) {
-    if (!searchTerm) this._filteredDispenseList.data = this._dispenseList;
-    else {
+    if (!searchTerm) {
+      this._filteredDispenseList.data = this._dispenseList;
+      this._filteredDispenseList = new MatTableDataSource<any>(
+        this._filteredDispenseList.data,
+      );
+      this._filteredDispenseList.paginator = this.paginator;
+    } else {
       this._filteredDispenseList.data = [];
       this._dispenseList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'patientIssueID' ||
-            key == 'patientName' ||
-            key == 'reference' ||
-            key == 'issueType' ||
-            key == 'createdBy'
+            key === 'patientIssueID' ||
+            key === 'patientName' ||
+            key === 'reference' ||
+            key === 'issueType' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
               this._filteredDispenseList.data.push(item);
+              this._filteredDispenseList = new MatTableDataSource<any>(
+                this._filteredDispenseList.data,
+              );
+              this._filteredDispenseList.paginator = this.paginator;
               break;
             }
           }
@@ -183,8 +174,8 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
     if (dispenseResponse) {
       const mdDialogRef: MatDialogRef<ViewMedicineDispenseDetailsComponent> =
         this.dialog.open(ViewMedicineDispenseDetailsComponent, {
-          // height: '90%',
-          width: '80%',
+          width: '1200px',
+          height: 'auto',
           panelClass: 'fit-screen',
           data: { dispense: dispense, dispenseItem: dispenseResponse },
           disableClose: false,

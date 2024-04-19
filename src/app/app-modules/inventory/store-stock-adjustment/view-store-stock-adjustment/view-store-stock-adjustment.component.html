@@ -2,16 +2,18 @@
   <section class="row m-t-10 no-gutters">
     <div class="col-xs-12 col-sm-4 box" style="padding-top: 12px">
       <h4 style="font-size: larger">
-        {{ currentLanguageSet?.inventory?.previousStoreAdjustment }}
+        {{ currentLanguageSet?.inventory?.previousStockAdjustment }}
       </h4>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
         <input
           matInput
           [matDatepicker]="startDatePicker"
-          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
           [(ngModel)]="fromDate"
           [min]="_minDate"
           [max]="today"
@@ -27,12 +29,14 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
         <input
           matInput
           [matDatepicker]="endDatePicker"
-          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
           [(ngModel)]="toDate"
           [min]="startDate?.value"
           [max]="today"
@@ -54,7 +58,7 @@
         >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
       >
     </div>
-    <div class="col-xs-12 col-sm-2 box" id="topBtn">
+    <div class="col-xs-12 col-sm-2 box" style="margin-top: 15px">
       <button
         mat-raised-button
         [disabled]="!fromDate || !toDate || endDate.value < startDate.value"
@@ -76,68 +80,76 @@
                 <input
                   autocomplete="off"
                   matInput
-                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
                   [(ngModel)]="filterTerm"
                   name="filterTerm"
+                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
                   (keyup)="filterStockAdjustmentList(filterTerm)"
                 />
                 <mat-icon class="filterTest" matSuffix>search</mat-icon>
               </mat-form-field>
             </div>
             <section class="col-xs-12">
-              <div class="table-responsive">
-                <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+              <div
+                class="table-responsive mat_form_field_background_color_table"
+              >
+                <table
+                  mat-table
+                  class="mat-elevation-z8"
+                  [dataSource]="dataSource"
+                >
                   <!-- Define columns for mat-table -->
                   <ng-container matColumnDef="noValue">
-                    <mat-header-cell *matHeaderCellDef>{{
-                      currentLanguageSet?.inventory?.index
-                    }}</mat-header-cell>
-                    <mat-cell *matCellDef="let stock; let i = index">{{
-                      i + 1
-                    }}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.index }}
+                    </th>
+                    <td mat-cell *matCellDef="let stock; let i = index">
+                      {{ i + 1 }}
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="stockAdjustmentID">
-                    <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.stockAdjustmentID }}
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <b>{{
+                        currentLanguageSet?.inventory?.stockAdjustmentID
+                      }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.stockAdjustmentID }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="refNo">
-                    <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.refNo }}
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.refNo }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="createdBy">
-                    <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.createdBy }}
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.createdBy }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="createdDate">
-                    <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.createdDate }}
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.createdDate | istDate: "dd/MM/yyyy" }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="view">
-                    <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.view }}
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <b>{{ currentLanguageSet?.inventory?.view }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment">
                       <mat-icon
                         class="cursorPointer filterTest"
                         (click)="
@@ -147,15 +159,15 @@
                         "
                         >remove_red_eye</mat-icon
                       >
-                    </mat-cell>
+                    </td>
                   </ng-container>
-                  <mat-header-row
-                    *matHeaderRowDef="displayedColumns"
-                  ></mat-header-row>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <!-- Data row -->
-                  <mat-row *matRowDef="let row; columns: displayedColumns">
-                  </mat-row>
-                </mat-table>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                  ></tr>
+                </table>
                 <div
                   *ngIf="dataSource && dataSource.data.length === 0"
                   class="noRecord"
@@ -164,10 +176,10 @@
                     currentLanguageSet?.inventory?.norecordsfound
                   }}</strong>
                 </div>
-                <div class="total-count" *ngIf="dataSource.data.length > 0">
+                <!-- <div class="total-count" *ngIf="dataSource.data.length > 0">
                   {{ currentLanguageSet?.inventory?.totalCount }} :
                   {{ dataSource.data.length }}
-                </div>
+                </div> -->
 
                 <mat-paginator
                   [hidden]="dataSource.data.length === 0"

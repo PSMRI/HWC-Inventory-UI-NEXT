@@ -21,13 +21,8 @@
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import * as XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
-
-// import * as Excel from 'exceljs/dist/exceljs.min.js'
-
 import { InventoryService } from '../../shared/service/inventory.service';
 import { ConfirmationService } from '../../../core/services/confirmation.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
@@ -70,7 +65,6 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
 
     this.dateOffset = 24 * 60 * 60 * 1000;
-    // this.maxEndDate = new Date(this.today.setTime(this.today.getTime()));
     this.maxEndDate = new Date();
     this.maxEndDate.setDate(this.today.getDate() - 1);
   }
@@ -93,7 +87,7 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
   checkEndDate() {
     console.log('', this.startDate);
 
-    if (this.endDate == null) {
+    if (this.endDate === null) {
       this.minEndDate = new Date(this.startDate);
       console.log('new Date(this.today.getDate() - 1);', new Date(this.today));
     } else {
@@ -144,7 +138,7 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
           'Json data of response: ',
           JSON.stringify(response, null, 4),
         );
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.beneficiaryDrugIssueList = response.data;
           this.getResponseOfSearchThenDo();
         }
@@ -152,7 +146,7 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
   }
 
   downloadReport(downloadFlag: boolean) {
-    if (downloadFlag == true) {
+    if (downloadFlag === true) {
       this.searchReport();
     }
   }
@@ -167,13 +161,13 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
     if (criteria.length > 0) {
       const criteriaArray = criteria.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (criteriaArray.length != 0) {
+      if (criteriaArray.length !== 0) {
         this.criteriaHead = Object.keys(criteriaArray[0]);
         console.log('this.criteriaHead', this.criteriaHead);
       }
@@ -182,13 +176,13 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
     if (this.beneficiaryDrugIssueList.length > 0) {
       const array = this.beneficiaryDrugIssueList.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (array.length != 0) {
+      if (array.length !== 0) {
         const head = Object.keys(array[0]);
         console.log(' head', head);
         const wb_name = 'Beneficiary Drug Issue Report';
@@ -206,7 +200,7 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
           }
           const cellPosition = String.fromCharCode(j);
           let finalCellName: any;
-          if (count == 0) {
+          if (count === 0) {
             finalCellName = cellPosition + '1';
             console.log(finalCellName);
           } else {
@@ -217,7 +211,7 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
           const newName = this.modifyHeader(head, i);
           // delete report_worksheet[finalCellName].w; report_worksheet[finalCellName].v = newName;
           i++;
-          if (i == 91 + count * 26) {
+          if (i === 91 + count * 26) {
             // i = 65;
             count++;
           }

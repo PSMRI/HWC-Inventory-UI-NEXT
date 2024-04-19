@@ -39,7 +39,9 @@ export class BeneficiaryDetailsService {
       .post(url, { beneficiaryRegID: beneficiaryRegID, benFlowID: benFlowID })
       .subscribe({
         next: (res: any) => {
+          console.log('HLNNDba', res.data);
           if (res.data) {
+            console.log('HLNN1', res.data);
             this.beneficiaryDetails.next(res.data);
           }
         },

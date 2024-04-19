@@ -26,6 +26,7 @@ import {
   EventEmitter,
   Output,
   DoCheck,
+  ViewChild,
 } from '@angular/core';
 import {
   NgForm,
@@ -43,6 +44,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { PatientReturnBatchDetailsComponent } from '../patient-return-batch-details/patient-return-batch-details.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-item-batch-details-for-patient-return',
@@ -62,12 +64,9 @@ export class ItemBatchDetailsForPatientReturnComponent
   resetBenDetails: EventEmitter<any> = new EventEmitter();
 
   itemReturnForm!: FormGroup;
-  // batchList: any;
   batchList = new MatTableDataSource<any>();
   selectedItemList: any = [];
   filterItemList: any = [];
-
-  // selectedBatchList: any = [];
   selectedBatchList = new MatTableDataSource<any>();
   patientReturnList: any = [];
 
@@ -75,6 +74,7 @@ export class ItemBatchDetailsForPatientReturnComponent
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   hide = false;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   displayedColumns: string[] = [
     'sNo',
     'itemName',
@@ -121,7 +121,7 @@ export class ItemBatchDetailsForPatientReturnComponent
   getBatchDetail(formvalue: any, editIndex: any) {
     let batchReq;
     let data: any;
-    if (editIndex == null) {
+    if (editIndex === null) {
       batchReq = {
         benRegID: this.benRegId,
         itemID: formvalue.itemID,
@@ -140,7 +140,7 @@ export class ItemBatchDetailsForPatientReturnComponent
     }
     this.inventoryService.getBatchDetails(batchReq).subscribe((response) => {
       console.log('Response of item batch list', response);
-      if (response.statusCode == 200) {
+      if (response.statusCode === 200) {
         this.batchList.data = response.data;
         this.popOutBenAndItemDetails(this.batchList.data, data, editIndex);
       }
@@ -154,8 +154,8 @@ export class ItemBatchDetailsForPatientReturnComponent
     console.log('Itemmmmm', itemName);
     const matDialogRef: MatDialogRef<PatientReturnBatchDetailsComponent> =
       this.dialog.open(PatientReturnBatchDetailsComponent, {
-        // height: '90%',
-        // width: '80%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         data: {
           batchList: batchList,
@@ -166,14 +166,24 @@ export class ItemBatchDetailsForPatientReturnComponent
       });
     matDialogRef.afterClosed().subscribe((selectedBatchList: any) => {
       if (selectedBatchList) {
-        if (editIndex != null) {
+        if (editIndex !== null) {
           this.selectedBatchList.data.splice(editIndex, 1);
           this.selectedBatchList.data.push(selectedBatchList.value);
+          this.selectedBatchList.paginator = this.paginator;
+          console.log(
+            ' this.selectedBatchList.data',
+            this.selectedBatchList.data,
+          );
           this.itemReturnForm.patchValue({
             itemName: null,
           });
         } else {
           this.selectedBatchList.data.push(selectedBatchList.value);
+          this.selectedBatchList.paginator = this.paginator;
+          console.log(
+            ' this.selectedBatchList.data',
+            this.selectedBatchList.data,
+          );
           this.itemReturnForm.patchValue({
             itemName: null,
           });
@@ -190,8 +200,11 @@ export class ItemBatchDetailsForPatientReturnComponent
 
   removeAddedItem(i: any) {
     const removedItem = this.selectedBatchList.data[i];
+    console.log('removedItem', removedItem);
+    // console.log("removedItem", removedItem);
     this.filterItemList.push(removedItem.itemName);
     this.selectedBatchList.data.splice(i, 1);
+    this.selectedBatchList.paginator = this.paginator;
   }
 
   filterItem(itemName: any, filterItemMasterList: any) {
@@ -199,18 +212,20 @@ export class ItemBatchDetailsForPatientReturnComponent
     console.log('selectedItemList', this.selectedItemList);
     this.filterItemList = [];
     this.filterItemList = filterItemMasterList.filter((item: any) => {
-      if (itemName && itemName.itemName && itemName.itemName != null) {
-        return itemName.itemName != item.itemName;
+      if (itemName && itemName.itemName && itemName.itemName !== null) {
+        return itemName.itemName !== item.itemName;
       }
-      return;
+      else{
+        return;
+      }
     });
   }
   openSearchDialog() {
     const mdDialogRef: MatDialogRef<SearchComponent> = this.dialog.open(
       SearchComponent,
       {
-        // height: '80%',
-        // width: '80%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         disableClose: false,
       },
@@ -241,7 +256,7 @@ export class ItemBatchDetailsForPatientReturnComponent
     this.inventoryService
       .updateQuantityReturned(finalData)
       .subscribe((response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.confirmationService.alert(response.data.response, 'success');
           this.resetFieldsAfterSubmit();
           this.resetBenDetails.emit(false);
@@ -252,6 +267,7 @@ export class ItemBatchDetailsForPatientReturnComponent
   resetFieldsAfterSubmit() {
     this.itemReturnForm.reset();
     this.selectedBatchList.data = [];
+    this.selectedBatchList.paginator = this.paginator;
   }
   resetOnClear() {
     this.resetFieldsAfterSubmit();

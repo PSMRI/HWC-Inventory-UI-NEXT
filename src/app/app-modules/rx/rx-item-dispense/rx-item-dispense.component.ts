@@ -24,8 +24,6 @@ import {
   OnInit,
   OnChanges,
   Input,
-  Output,
-  EventEmitter,
   SimpleChanges,
   DoCheck,
 } from '@angular/core';
@@ -48,9 +46,6 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
   @Input() prescription: any;
   @Input() issueType!: number;
   // issuteType 0 means Manual and 1 means System
-
-  // @Output() public onDispense: EventEmitter<any> = new EventEmitter();
-
   prescriptionForm!: FormGroup;
   prescriptionFormEDL!: FormGroup;
   allocated = true;
@@ -80,7 +75,6 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
 
   ngOnInit() {
     this.fetchLanguageResponse();
-    // this.http_service.currentLangugae$.subscribe(response =>this.currentLanguageSet = response);
     this.facilityID = localStorage.getItem('facilityID');
     this.copyprescription = JSON.parse(JSON.stringify(this.prescription));
     this.loadForm(this.prescription);
@@ -97,7 +91,11 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
     const drugMasterCopy = Object.assign([], prescription);
     this.filteredDrugMaster = [];
     drugMasterCopy.itemList.forEach((element: any) => {
-      if (element.isEDL === true || element.batchList.length > 0) {
+      if (
+        element.isEDL != null &&
+        element.isEDL != undefined &&
+        (element.isEDL === true || element.batchList.length > 0)
+      ) {
         this.filteredDrugMaster.push(element);
       } else {
         this.filteredDrugMasterEdl.push(element);
@@ -134,7 +132,7 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
     this.prescribedDrugService
       .allocateBatches(meds, this.facilityID)
       .subscribe((batches: any) => {
-        if (batches.statusCode == 200) {
+        if (batches.statusCode === 200) {
           const data = batches.data;
           data.map((batch: any) =>
             this.applyBatches(batch.itemID, batch.itemBatchList),
@@ -187,9 +185,6 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
     currentGroup.controls['batchList'] = batchList;
   }
 
-  // saveCall(): void {
-  //   this.onDispense.emit(this.prescription);
-  // }
   changeIssueType() {
     const formItems = <FormArray>this.prescriptionForm.controls['itemList'];
     formItems.value.forEach((element: any, i: any) => {
@@ -204,14 +199,14 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
       this.clearBatchArray(batchList);
       this.clearBatchArray(selectionBatchList);
 
-      if (this.issueType == 0) {
+      if (this.issueType === 0) {
         this.allocated = false;
         element.preDefinedBatchList.forEach((batch: any) => {
           selectionBatchList.push(
             this.utils.initBatchListElement(batch, this.issueType),
           );
         });
-      } else if (this.issueType == 1) {
+      } else if (this.issueType === 1) {
         this.allocate();
       }
       currentGroup.patchValue({
@@ -242,7 +237,7 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
           this.issueType,
         )
         .subscribe((res: any) => {
-          if (res && this.issueType == 0) {
+          if (res && this.issueType === 0) {
             this.pushSavedBatches(
               res.batchList,
               res.selectionBatchList,
@@ -281,8 +276,6 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
         this.utils.initBatchListElement(element, this.issueType),
       );
     });
-    // console.log(batchList.value, 'batch');
-    // console.log(selectionList.value, 'selection');
 
     currentGroup.controls['batchList'] = batchList;
     currentGroup.controls['selectionBatchList'] = selectionBatchList;

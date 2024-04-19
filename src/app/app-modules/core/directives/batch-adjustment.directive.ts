@@ -19,17 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
-// import { BatchAdjustmentComponent } from '../components/batch-adjustment/batch-adjustment.component';
-import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { BatchAdjustmentComponent } from '../components/batch-adjustment/batch-adjustment.component';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { InventoryService } from '../../inventory/shared/service/inventory.service';
 
 @Directive({
   selector: '[appBatchAdjustment]',
@@ -46,23 +40,23 @@ export class BatchAdjustmentDirective {
   }
 
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
 
   constructor(
     private el: ElementRef,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private inventoryService: InventoryService,
   ) {}
 
   openDialog(): void {
-    // const searchTerm = this.stockForm.controls['itemName'].value;
     const searchTerm = this.stockForm.value.itemName;
     console.log('SEACHTEREM', searchTerm);
 
     const dialogRef = this.dialog.open(BatchAdjustmentComponent, {
-      width: '80%',
-      height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedStock: this.previousSelected },
     });
@@ -93,9 +87,10 @@ export class BatchAdjustmentDirective {
           (<FormGroup>formArray.at(i)).controls['itemName'].disable();
           // (<FormGroup>formArray.at(i)).controls['quantity'].enable();
           (<FormGroup>formArray.at(i)).markAsDirty();
-
-          if (formArray.length < len + result.length - 1)
+          if (formArray.length < len + result.length - 1) {
             formArray.push(this.initStockAdjustmentList());
+            this.inventoryService.dialogClosed();
+          }
         }
       }
     });

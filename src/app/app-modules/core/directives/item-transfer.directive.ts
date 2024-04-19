@@ -19,23 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
-import {
-  NgControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-// import { TransferSearchComponent } from '../components/transfer-search/transfer-search.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferSearchComponent } from '../components/transfer-search/transfer-search.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Directive({
   selector: '[appItemTransfer]',
@@ -52,7 +39,7 @@ export class ItemTransferDirective {
   }
 
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
 
   constructor(
@@ -67,8 +54,8 @@ export class ItemTransferDirective {
       this.stockForm?.parent?.parent?.value.transferTo.facilityID;
 
     const dialogRef = this.dialog.open(TransferSearchComponent, {
-      // width: '80%',
-      // height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: {
         searchTerm: searchTerm,

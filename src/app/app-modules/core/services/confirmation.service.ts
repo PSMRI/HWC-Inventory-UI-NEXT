@@ -20,6 +20,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { DOCUMENT } from '@angular/common';
+import { CommonDialogComponent } from '../components/common-dialog/common-dialog.component';
 import { Injectable, Inject } from '@angular/core';
 import {
   MatDialog,
@@ -27,7 +28,6 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { CommonDialogComponent } from '../components/common-dialog/common-dialog.component';
 
 @Injectable()
 export class ConfirmationService {
@@ -231,4 +231,3 @@ export class ConfirmationService {
     return dialogRef.afterClosed();
   }
 }
-

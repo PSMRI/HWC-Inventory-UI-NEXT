@@ -21,9 +21,8 @@
  */
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRoute } from '@angular/router';
-// import { SetLanguageComponent } from '../components/set-language.component';
-import { LanguageService } from './language.service';
 import { SetLanguageComponent } from '../components/set-language.component';
+import { LanguageService } from './language.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -35,7 +34,7 @@ export class AuthGuard implements CanActivate {
     public http_service: LanguageService,
     private route: ActivatedRoute,
   ) {
-    // this.fetchLanguageResponse();
+    this.fetchLanguageResponse();
   }
 
   canActivate(route: any, state: any) {

@@ -1,66 +1,3 @@
-// import { NgModule, ErrorHandler, ModuleWithProviders } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { Http, XHRBackend, RequestOptions } from '@angular/http';
-// import { MaterialModule } from './material.module';
-// import { Md2Module } from 'md2';
-
-// import { RouterModule, Router } from '@angular/router';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { Ng2GoogleChartsModule } from 'ng2-google-charts';
-
-// import { CommonDialogComponent } from './components/common-dialog/common-dialog.component';
-// import { TextareaDialogComponent } from './components/textarea-dialog/textarea-dialog.component';
-// import { SpinnerComponent } from './components/spinner/spinner.component';
-// import { AppFooterComponent } from './components/app-footer/app-footer.component';
-// import { AppHeaderComponent } from './components/app-header/app-header.component';
-// import { BeneficiaryDetailsComponent } from './components/beneficiary-details/beneficiary-details.component';
-
-// import { HttpInterceptor } from './services/http-interceptor.service';
-// import { SpinnerService } from './services/spinner.service';
-// import { ConfirmationService } from './services/confirmation.service';
-// import { BatchViewService } from './services/rx-batchview.service';
-// import { AuthGuard } from './services/auth-guard.service';
-// import { TextareaDialog } from './components/textarea-dialog/textarea-dialog.service';
-// import { CommonService } from './services/common-services.service';
-import { GlobalErrorHandler } from './services/global-error-handler.service';
-
-// import { myEmail } from './directives/email/myEmail.directive';
-// import { myMobileNumber } from './directives/MobileNumber/myMobileNumber.directive';
-// import { myName } from './directives/name/myName.directive';
-// import { myPassword } from './directives/password/myPassword.directive';
-// import { StringValidator } from './directives/stringValidator.directive';
-// import { NumberValidator } from './directives/numberValidator.directive';
-// import { MinNumberValidator } from './directives/minNumberValidator.directive';
-// import { DisableFormControlDirective } from './directives/disableFormControl.directive';
-// import { NullDefaultValueDirective } from './directives/null-default-value.directive';
-
-// import { ItemSearchComponent } from './components/item-search/item-search.component';
-// import { ItemSearchDirective } from './directives/item-search.directive';
-// import { ItemTransferDirective } from './directives/item-transfer.directive';
-// import { ItemDispenseDirective } from './directives/item-dispense.directive';
-// import { TransferSearchComponent } from './components/transfer-search/transfer-search.component';
-// import { ItemDispenseComponent } from './components/item-dispense/item-dispense.component';
-// import { ItemSearchService } from './services/item-search.service';
-
-
-// import { BatchSearchComponent } from './components/batch-search/batch-search.component';
-// import { BatchSearchDirective } from './directives/batch-search.directive';
-// import { BatchSearchService } from './services/batch-search.service';
-// import { SearchComponent } from './components/search/search.component';
-// import { RxBatchViewComponent } from './components/rx-batch-view/rx-batch-view.component';
-// import { BeneficiaryDetailsService } from './services/beneficiary-details.service';
-
-// import { ISTDatePipe } from './pipes/ist-date.pipe';
-// import { BatchAdjustmentDirective } from './directives/batch-adjustment.directive';
-// import { BatchAdjustmentComponent } from './components/batch-adjustment/batch-adjustment.component';
-// import { IndentRequestDirective } from './directives/indent-request.directive';
-// import { IndentItemListComponent } from './components/indent-item-list/indent-item-list.component';
-// import { IndentDispenseDirective } from './directives/indent-dispense.directive';
-// import { ShowCommitAndVersionDetailsComponent } from './components/show-commit-and-version-details/show-commit-and-version-details.component'
-// import { HttpClientModule } from '@angular/common/http';
-// import { SetLanguageComponent } from './components/set-language.component';
-
-
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { LanguageService } from './services/language.service';
@@ -69,30 +6,12 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthGuard } from './services/auth-guard.service';
-import { BatchSearchService } from './services/batch-search.service';
 import { CommonService } from './services/common-services.service';
 import { ConfirmationService } from './services/confirmation.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { ItemSearchService } from './services/item-search.service';
 import { BatchViewService } from './services/rx-batchview.service';
 import { SpinnerService } from './services/spinner.service';
-import { myEmailDirective } from './directives/email/myEmail.directive';
-import { myMobileNumberDirective } from './directives/MobileNumber/myMobileNumber.directive';
-import { myNameDirective } from './directives/name/myName.directive';
-import { myPasswordDirective } from './directives/password/myPassword.directive';
-import { BatchAdjustmentDirective } from './directives/batch-adjustment.directive';
-import { BatchSearchDirective } from './directives/batch-search.directive';
-import { DisableFormControlDirective } from './directives/disableFormControl.directive';
-import { IndentDispenseDirective } from './directives/indent-dispense.directive';
-import { IndentRequestDirective } from './directives/indent-request.directive';
-import { ItemDispenseDirective } from './directives/item-dispense.directive';
-import { ItemSearchDirective } from './directives/item-search.directive';
-import { ItemTransferDirective } from './directives/item-transfer.directive';
-import { MinNumberValidatorDirective } from './directives/minNumberValidator.directive';
-import { NullDefaultValueDirective } from './directives/null-default-value.directive';
-import { NumberValidatorDirective } from './directives/numberValidator.directive';
-import { StringValidatorDirective } from './directives/stringValidator.directive';
 import { ISTDatePipe } from './pipes/ist-date.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
@@ -117,18 +36,37 @@ import { AppFooterComponent } from './components/app-footer/app-footer.component
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SetLanguageComponent } from './components/set-language.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
-import { ShowCommitAndVersionDetailsComponent } from './components/show-commit-and-version-details/show-commit-and-version-details.component';
-import { ItemSearchComponent } from './components/item-search/item-search.component';
 import { BatchAdjustmentComponent } from './components/batch-adjustment/batch-adjustment.component';
 import { BatchSearchComponent } from './components/batch-search/batch-search.component';
 import { BeneficiaryDetailsComponent } from './components/beneficiary-details/beneficiary-details.component';
-import { IndentItemListComponent } from './components/indent-item-list/indent-item-list.component';
+import { TextareaDialog } from './components/textarea-dialog/textarea-dialog.service';
+import { TextareaDialogComponent } from './components/textarea-dialog/textarea-dialog.component';
+import { myEmailDirective } from './directives/email/myEmail.directive';
+import { myMobileNumberDirective } from './directives/MobileNumber/myMobileNumber.directive';
+import { myNameDirective } from './directives/name/myName.directive';
+import { myPasswordDirective } from './directives/password/myPassword.directive';
+import { StringValidatorDirective } from './directives/stringValidator.directive';
+import { NullDefaultValueDirective } from './directives/null-default-value.directive';
+import { NumberValidatorDirective } from './directives/numberValidator.directive';
+import { DisableFormControlDirective } from './directives/disableFormControl.directive';
+import { ItemSearchComponent } from './components/item-search/item-search.component';
+import { ItemSearchDirective } from './directives/item-search.directive';
+import { MinNumberValidatorDirective } from './directives/minNumberValidator.directive';
+import { TransferSearchComponent } from './components/transfer-search/transfer-search.component';
+import { ItemTransferDirective } from './directives/item-transfer.directive';
+import { BatchSearchDirective } from './directives/batch-search.directive';
+import { ItemDispenseDirective } from './directives/item-dispense.directive';
 import { ItemDispenseComponent } from './components/item-dispense/item-dispense.component';
 import { SearchComponent } from './components/search/search.component';
-import { TextareaDialogComponent } from './components/textarea-dialog/textarea-dialog.component';
-import { TransferSearchComponent } from './components/transfer-search/transfer-search.component';
-import { TextareaDialog } from './components/textarea-dialog/textarea-dialog.service';
+import { BatchAdjustmentDirective } from './directives/batch-adjustment.directive';
 import { RxBatchViewComponent } from './components/rx-batch-view/rx-batch-view.component';
+import { IndentRequestDirective } from './directives/indent-request.directive';
+import { IndentItemListComponent } from './components/indent-item-list/indent-item-list.component';
+import { IndentDispenseDirective } from './directives/indent-dispense.directive';
+import { ShowCommitAndVersionDetailsComponent } from './components/show-commit-and-version-details/show-commit-and-version-details.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { BatchSearchService } from './services/batch-search.service';
+
 
 
 

@@ -19,13 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  DoCheck,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { Location } from '@angular/common';
 import { InventoryService } from '../../shared/service/inventory.service';
 import { DataStorageService } from './../../shared/service/data-storage.service';
@@ -51,7 +45,6 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
   _dateRangePrevious: Date[] = [];
 
   _consumptionList: any = [];
-  // _filteredConsumptionList: any = [];
   _filteredConsumptionList = new MatTableDataSource<any>();
   blankTable = [1, 2, 3, 4, 5];
   filterTerm: any;
@@ -88,14 +81,6 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
     this._minDate.setFullYear(this._today.getFullYear() - 1);
     this._dateRange[0] = this._today;
     this._dateRange[1] = this._today;
-
-    // const dateFrom = new Date();
-    // dateFrom.setDate(dateFrom.getDate() - 30);
-
-    // const dateTo = new Date();
-    // dateTo.setDate(dateTo.getDate() + 1);
-
-    // this._dateRange = [dateFrom, dateTo];
     console.log(this._dateRange, 'dateRange');
   }
 
@@ -167,10 +152,10 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
       this._consumptionList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'consumptionID' ||
-            key == 'refNo' ||
-            key == 'reason' ||
-            key == 'createdBy'
+            key === 'consumptionID' ||
+            key === 'refNo' ||
+            key === 'reason' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
@@ -197,8 +182,8 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
     if (consumptionResponse) {
       const mdDialogRef: MatDialogRef<ViewStoreSelfConsumptionDetailsComponent> =
         this.dialog.open(ViewStoreSelfConsumptionDetailsComponent, {
-          // height: '90%',
-          width: '80%',
+          width: '1200px',
+          height: 'auto',
           panelClass: 'fit-screen',
           data: {
             consumptionDetails: consumptionDetails,
@@ -208,7 +193,7 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
         });
       mdDialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          if (result.print != null && result.print == true) {
+          if (result.print !== null && result.print === true) {
             if (result.print) {
               const printableData = this.createPrintableData(
                 consumptionDetails,
@@ -230,7 +215,7 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
     const facilityName = facilityDetail.facilityName;
     const printableData: any = [];
     let i = 0;
-    consumptionResponse.forEach((batch: any) => {
+    consumptionResponse.data.forEach((batch: any) => {
       i = i + 1;
       const consumedBatch = {
         sNo: i,

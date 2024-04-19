@@ -54,7 +54,8 @@
         >
           <ng-container [formGroupName]="i">
             <div
-              class="row m-t-5 row-shade p-5"
+              class="row m-t-5 row-shade"
+              style="margin-right: 10px; padding-left: 15px; margin-left: 10px"
               [ngClass]="{
                 'alert-border':
                   batch.value.expiresIn && batch.value.expiresIn < alertDays
@@ -63,7 +64,6 @@
               <div class="col-md-1 checkbox-fix">
                 <mat-checkbox
                   color="primary"
-                  [disabled]="true"
                   (change)="checkboxChange($event, i)"
                   formControlName="selection"
                 >
@@ -72,7 +72,9 @@
               <div
                 class="col-md-2 right-padding-remove-desktop left-padding-remove-desktop"
               >
-                <mat-form-field class="input-full-width">
+                <mat-form-field
+                  class="input-full-width mat_form_field_background_color"
+                >
                   <mat-label>{{
                     currentLanguageSet?.itemDispense?.batchNo
                   }}</mat-label>
@@ -91,7 +93,9 @@
               </div>
 
               <div class="col-md-2">
-                <mat-form-field class="input-full-width">
+                <mat-form-field
+                  class="input-full-width mat_form_field_background_color"
+                >
                   <mat-label>{{
                     currentLanguageSet?.itemDispense?.quantityinHand
                   }}</mat-label>
@@ -110,25 +114,20 @@
               </div>
               <div class="col-md-3">
                 <mat-form-field
-                  class="input-full-width"
+                  class="input-full-width mat_form_field_background_color"
                   (click)="enableBatch(batch.value, i)"
                 >
-                <mat-label>{{
-                  currentLanguageSet?.itemDispense?.dispenseQuantity
-                }}</mat-label>
+                  <mat-label>{{
+                    currentLanguageSet?.itemDispense?.dispenseQuantity
+                  }}</mat-label>
                   <input
                     autocomplete="off"
                     matInput
                     defaultNull
                     [required]="batch.value.selection"
-                    allowText="number"
-                    [readonly]="!batch.value.selection || editSelection === 1"
-                    allowMax="batch.value.quantityInHand"
+                    [readonly]="editSelection === 1"
                     name="quantity"
                     formControlName="quantity"
-                    placeholder="{{
-                      currentLanguageSet?.itemDispense?.dispenseQuantity
-                    }}"
                     (blur)="
                       setDispensed(itemsForm.controls['formArray'].value, i)
                     "
@@ -136,26 +135,22 @@
                 </mat-form-field>
               </div>
               <div class="col-md-2">
-                <mat-form-field class="input-full-width">
+                <mat-form-field
+                  [style.width]="'100%'"
+                  class="mat_form_field_background_color"
+                >
                   <mat-label>{{
                     currentLanguageSet?.itemDispense?.expiryDate
                   }}</mat-label>
                   <input
-                    style="width: 120px;"
                     matInput
-                    [matDatepicker]="expiryDatepicker"
+                    readonly
                     placeholder="{{
                       currentLanguageSet?.itemDispense?.expiryDate
                     }}"
-                    name="expiryDate"
+                    allowText="alphaspace"
                     formControlName="expiryDate"
-                    [disabled]="true"
                   />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="expiryDatepicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #expiryDatepicker></mat-datepicker>
                 </mat-form-field>
               </div>
             </div>
@@ -164,10 +159,10 @@
       </div>
     </div>
   </form>
-  <div class="action">
+  <div style="text-align: end; margin: 15px 10px 10px 0px">
     <button
       (click)="save()"
-      md-raised-button
+      mat-raised-button
       class="selectButton"
       style="color: white"
       type="button"

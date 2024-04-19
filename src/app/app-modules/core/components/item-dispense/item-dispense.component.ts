@@ -23,8 +23,7 @@ import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { ItemSearchService } from '../../services/item-search.service';
 import { ConfirmationService } from '../../services/confirmation.service';
 
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -57,28 +56,45 @@ export class ItemDispenseComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.search(this.input.searchTerm);
+    console.log('this.input', this.input);
     this.fetchLanguageResponse();
   }
 
   search(term: string): void {
     this.items$ = this.itemSearchService.getItemDetailsByName(term);
-    this.items$.subscribe((data) => {
-      if (data) {
-        this.dataSource.data = data.data;
-        this.dataSource.paginator = this.paginator;
-        this.noRecordsFlag = true;
-      } else {
-        this.noRecordsFlag = false;
-      }
-    });
+    if (term === '%%') {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    } else if (term) {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    }
   }
 
   selectSelectedItem(selectedItem: any) {
-    const dispenseItemList = this.input.dispenseItemList.data;
+    const dispenseItemList: any = this.input.dispenseItemList.data;
+    console.log(
+      'this.input.dispenseItemList.data',
+      this.input.dispenseItemList.data,
+    );
     console.log('dispenseItemList', dispenseItemList);
 
     const temp = dispenseItemList.filter(
-      (item: any) => item.itemID == selectedItem.item.itemID,
+      (item: any) => item.itemID === selectedItem.item.itemID,
     );
 
     if (temp.length <= 0) this.dialogRef.close(selectedItem);

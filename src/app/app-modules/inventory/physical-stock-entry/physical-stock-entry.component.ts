@@ -27,9 +27,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { InventoryService } from '../shared/service/inventory.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import {
-  NgForm,
   FormBuilder,
   FormArray,
   Validators,
@@ -37,7 +35,6 @@ import {
   FormControl,
   AbstractControl,
 } from '@angular/forms';
-import { map, startWith } from 'rxjs/operators';
 import { ConfirmationService } from '../../core/services/confirmation.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { SetLanguageComponent } from '../../core/components/set-language.component';
@@ -65,8 +62,7 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
   stockItemName: any;
   physicalStockEntryForm!: FormGroup;
   matTableStockForm!: FormGroup;
-  // dataSource!: MatTableDataSource<any>;
-  // dataSource = new BehaviorSubject<FormArray | null>(null);
+  isDisabled = true;
   otherDetails: any;
   physicalStockList: any = [];
   physicalStockTableDataList: any = [];
@@ -83,9 +79,7 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
     'actions',
   ];
   stockEntryDate = new FormControl(new Date());
-  isMainFacility = false;
 
-  // physicalStock!: FormArray
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private inventoryService: InventoryService,
@@ -104,13 +98,6 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
       vanID: localStorage.getItem('vanID'),
       parkingPlaceID: localStorage.getItem('parkingPlaceID'),
     };
-
-    const isMainfacilityFlag: any = localStorage.getItem('facilityDetail');
-    const facilityData = JSON.parse(isMainfacilityFlag);
-    
-    if(facilityData.storeType.toUpperCase() === "MAIN"){
-        this.isMainFacility = true;
-    } 
 
     this.today = new Date();
     this.fetchLanguageResponse();
@@ -194,7 +181,6 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
   }
 
   removeStock(index: any, stock?: FormGroup) {
-    // this.physicalStock.removeAt(index);
     const stockForm = this.physicalStockEntryForm.get(
       'physicalStock',
     ) as FormArray;
@@ -203,7 +189,6 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
 
     if (stockForm.length > 1) {
       stockForm.removeAt(index);
-      // stockForm.clear();
       this.loadStockData();
     } else {
       if (stock) {
@@ -235,7 +220,7 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
     this.inventoryService.savePhysicalStock(temp).subscribe(
       (response) => {
         if (
-          response.statusCode == 200 &&
+          response.statusCode === 200 &&
           response.data &&
           response.data.phyEntryID
         ) {
@@ -274,28 +259,24 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
   }
 
   removeAllPhysicalStock(physicalStockArray: FormArray) {
-    // let len = physicalStockArray.length;
-
     while (physicalStockArray.length > 1) {
       physicalStockArray.removeAt(0);
     }
-    // physicalStockArray.enable();
   }
 
   checkForDuplicateBatch(stockForm: FormGroup, index: any) {
-    // const index = (this.physicalStockEntryForm.get('physicalStock') as FormArray).controls.indexOf(stockForm)
     const stockList =
       this.physicalStockEntryForm.controls['physicalStock'].value;
     const itemID = stockForm.value.itemID;
     const batchNo = stockForm.value.batchNo;
 
     const temp = stockList.filter((stock: any, i: any) => {
-      if (i != index)
+      if (i !== index)
         return (
           itemID &&
-          stock.itemID == itemID &&
+          stock.itemID === itemID &&
           batchNo &&
-          stock.batchNo == batchNo
+          stock.batchNo === batchNo
         );
       else return false;
     });

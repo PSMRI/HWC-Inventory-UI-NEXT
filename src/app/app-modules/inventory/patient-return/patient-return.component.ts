@@ -20,12 +20,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  FormGroup,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { InventoryService } from './../../inventory/shared/service/inventory.service';
 import { ConfirmationService } from './../../core/services/confirmation.service';
 import { SetLanguageComponent } from '../../core/components/set-language.component';
@@ -109,9 +104,9 @@ export class PatientReturnComponent implements OnInit, DoCheck {
   }
 
   identityQuickSearch(beneficiaryIDOrPhoneNumber: string) {
-    if (beneficiaryIDOrPhoneNumber.length == 10) {
+    if (beneficiaryIDOrPhoneNumber.length === 10) {
       this.phoneNumberSearch(beneficiaryIDOrPhoneNumber);
-    } else if (beneficiaryIDOrPhoneNumber.length == 12) {
+    } else if (beneficiaryIDOrPhoneNumber.length === 12) {
       this.beneficiarySearch(beneficiaryIDOrPhoneNumber);
     }
   }
@@ -119,8 +114,8 @@ export class PatientReturnComponent implements OnInit, DoCheck {
   openBenDetailsModal() {
     const mdDialogRef: MatDialogRef<BenificiaryDetailsComponent> =
       this.dialog.open(BenificiaryDetailsComponent, {
-        // height: '90%',
-        width: '80%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         data: {
           beneficiaryDetailsList: this.beneficiaryDetailsList,
@@ -147,7 +142,7 @@ export class PatientReturnComponent implements OnInit, DoCheck {
   }
 
   reponseDataCheck(response: any) {
-    if (response.statusCode == 200) {
+    if (response.statusCode === 200) {
       if (response.data.length > 0) {
         this.beneficiaryDetailsList = response.data;
         this.openBenDetailsModal();
@@ -185,7 +180,7 @@ export class PatientReturnComponent implements OnInit, DoCheck {
 
   itemSearch(beneficiary: any) {
     console.log('Beneficiary details..', beneficiary);
-    if (beneficiary != undefined) {
+    if (beneficiary !== undefined) {
       this.inventoryService
         .getItemList({
           benRegID: beneficiary.beneficiaryRegID,

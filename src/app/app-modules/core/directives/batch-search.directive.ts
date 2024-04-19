@@ -19,19 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 
-import { NgControl } from '@angular/forms';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BatchSearchComponent } from '../components/batch-search/batch-search.component';
-// import { BatchSearchComponent } from '../components/batch-search/batch-search.component';
+import { InventoryService } from '../../inventory/shared/service/inventory.service';
 
 @Directive({
   selector: '[appBatchSearch]',
@@ -50,21 +43,22 @@ export class BatchSearchDirective {
   }
 
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
 
   constructor(
     private el: ElementRef,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private inventoryService: InventoryService,
   ) {}
 
   openDialog(): void {
     const searchTerm = this.stockForm.value.itemName;
 
     const dialogRef = this.dialog.open(BatchSearchComponent, {
-      // width: '80%',
-      // height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedStock: this.previousSelected },
     });
@@ -98,6 +92,7 @@ export class BatchSearchDirective {
 
           if (formArray.length < len + result.length - 1)
             formArray.push(this.initDispensedStock());
+          this.inventoryService.dialogClosed();
         }
       }
     });

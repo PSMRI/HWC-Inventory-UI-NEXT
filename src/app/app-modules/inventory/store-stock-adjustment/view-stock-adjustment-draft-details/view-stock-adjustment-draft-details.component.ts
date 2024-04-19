@@ -39,7 +39,6 @@ export class ViewStockAdjustmentDraftDetailsComponent
 
   stock: any;
   adjustmentList: any = [];
-  // filteredAdjustmentList: any = [];
   filteredAdjustmentList = new MatTableDataSource<any>();
   currentLanguageSet: any;
   languageComponent!: SetLanguageComponent;
@@ -60,6 +59,7 @@ export class ViewStockAdjustmentDraftDetailsComponent
     'batchNo',
     'quantityOnHand',
     'adjustmentType',
+    'adjustedQuantity',
     'reason',
   ];
 
@@ -84,34 +84,44 @@ export class ViewStockAdjustmentDraftDetailsComponent
       .subscribe((response) => {
         this.stock = response;
         this.stockAdjustmentDraftList.data.push(this.stock);
+        console.log(
+          ' this.stockAdjustmentDraftList.data',
+          this.stockAdjustmentDraftList.data,
+        );
         this.dataSource = new MatTableDataSource<any>(
           this.stockAdjustmentDraftList.data,
         );
-        this.adjustmentList.push(response.stockAdjustmentItemDraftEdit);
+        this.adjustmentList.push(response.data.stockAdjustmentItemDraftEdit);
         this.filteredAdjustmentList.data.push(this.stock);
         this.newDataSource = new MatTableDataSource<any>(
           this.filteredAdjustmentList.data[0].data.stockAdjustmentItemDraftEdit,
         );
+        this.newDataSource.paginator = this.paginator;
       });
   }
 
   filterDetails(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredAdjustmentList.data = this.adjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      this.filteredAdjustmentList.data = this.adjustmentList;
+      this.newDataSource = new MatTableDataSource<any>(
+        this.filteredAdjustmentList.data[0],
+      );
+      this.newDataSource.paginator = this.paginator;
+    } else {
       this.filteredAdjustmentList.data = [];
-      this.adjustmentList.forEach((item: any) => {
+      console.log(" this.adjustmentList",  this.adjustmentList);
+      this.adjustmentList[0].forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'itemName' ||
-            key == 'batchID' ||
-            key == 'reason' ||
-            key == 'quantityInHand' ||
-            key == 'adjustedQuantity' ||
-            key == 'isAdded'
+            key === 'itemName' ||
+            key === 'batchID' ||
+            key === 'reason' ||
+            key === 'quantityInHand' ||
+            key === 'adjustedQuantity' ||
+            key === 'isAdded'
           ) {
             const value: string = '' + item[key];
-            if (key == 'isAdded') {
+            if (key === 'isAdded') {
               if (
                 'receipt'.indexOf(filterTerm.toLowerCase()) >= 0 &&
                 item[key]
@@ -123,11 +133,16 @@ export class ViewStockAdjustmentDraftDetailsComponent
                 !item[key]
               ) {
                 this.filteredAdjustmentList.data.push(item);
+                this.newDataSource.paginator = this.paginator;
                 break;
               }
             }
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this.filteredAdjustmentList.data.push(item);
+              console.log("this.filteredAdjustmentList.data", this.filteredAdjustmentList.data);
+              this.newDataSource = new MatTableDataSource<any>(
+                this.filteredAdjustmentList.data,
+              );
               break;
             }
           }

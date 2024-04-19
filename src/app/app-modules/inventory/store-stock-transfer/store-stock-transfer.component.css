@@ -29,7 +29,6 @@
 @media screen and (max-width: 768px) {
   .button-full-width {
       width: 100%;
-      /* height: 50px; */
       margin-top: 3px;
   }
 }
@@ -53,4 +52,15 @@
   display: flex; 
   justify-content: flex-end;
   padding-top: 12px;
+}
+.mat_form_field_background_color >>> .mdc-text-field--filled {
+  background-color: #f2f2f0 !important;
+}
+
+.mat_form_field_background_color_padding >>> .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+  padding-top: 24px !important; 
+}
+.mat_form_field_background_color_table >>> .mdc-text-field{
+  padding: unset !important;
+  background-color:unset !important;
 }

@@ -42,7 +42,6 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
 
   filterTerm: any;
   filteredPatientReturnList = new MatTableDataSource<any>();
-  // filteredPatientReturnList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 
@@ -80,6 +79,7 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
   }
 
   viewRecords() {
+    const facilityID = localStorage.getItem('facilityID');
     const startDate: Date = new Date(this.fromDate);
     startDate.setHours(0);
     startDate.setMinutes(0);
@@ -99,9 +99,7 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
       toDate: new Date(
         endDate.valueOf() - 1 * endDate.getTimezoneOffset() * 60 * 1000,
       ),
-      facilityID: localStorage.getItem('facilityID')
-        ? +localStorage.getItem('facilityID')!
-        : undefined,
+      facilityID: facilityID ? +facilityID : undefined,
     };
 
     this.inventoryService.getPatientReturnList(temp).subscribe((response) => {
@@ -128,11 +126,11 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
       this.patientReturnList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'itemName' ||
-            key == 'batchNo' ||
-            key == 'dateofIssue' ||
-            key == 'patientName' ||
-            key == 'returnDate'
+            key === 'itemName' ||
+            key === 'batchNo' ||
+            key === 'dateofIssue' ||
+            key === 'patientName' ||
+            key === 'returnDate'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {

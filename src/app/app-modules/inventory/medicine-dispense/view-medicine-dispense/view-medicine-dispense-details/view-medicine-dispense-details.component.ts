@@ -44,7 +44,6 @@ export class ViewMedicineDispenseDetailsComponent
 {
   _filterTerm = '';
   _detailedList: any = [];
-  // _filteredDetailedList: any = [];
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
@@ -73,8 +72,6 @@ export class ViewMedicineDispenseDetailsComponent
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     this.data = '';
   }
   populateDispenseRecords(data: any) {
@@ -90,15 +87,22 @@ export class ViewMedicineDispenseDetailsComponent
 
   filterDetails(filterTerm: string) {
     console.log(filterTerm);
-    if (!filterTerm) this._filteredDetailedList.data = this._detailedList;
-    else {
+    if (!filterTerm) {
+      this._filteredDetailedList.data = this._detailedList.data;
+      this.dataSource = new MatTableDataSource<any>(
+        this._filteredDetailedList.data,
+      );
+    } else {
       this._filteredDetailedList.data = [];
-      this._detailedList.forEach((item: any) => {
+      this._detailedList.data.forEach((item: any) => {
         for (const key in item) {
-          if (key == 'batchNo' || key == 'itemName' || key == 'quantity') {
+          if (key === 'batchNo' || key === 'itemName' || key === 'quantity') {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this._filteredDetailedList.data.push(item);
+              this.dataSource = new MatTableDataSource<any>(
+                this._filteredDetailedList.data,
+              );
               break;
             }
           }
@@ -122,7 +126,7 @@ export class ViewMedicineDispenseDetailsComponent
     const facilityName = facilityDetail.facilityName;
     const printableData: any = [];
     let i = 0;
-    this.data.dispenseItem.forEach((dispenseItem: any) => {
+    this.data.dispenseItem.data.forEach((dispenseItem: any) => {
       i = i + 1;
       const dispensedItem = {
         sNo: i,

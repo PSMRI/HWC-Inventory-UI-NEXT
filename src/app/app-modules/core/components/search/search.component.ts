@@ -24,7 +24,6 @@ import {
   OnInit,
   ViewChild,
   ChangeDetectorRef,
-  AfterViewChecked,
   DoCheck,
 } from '@angular/core';
 import { ConfirmationService } from '../../services/confirmation.service';
@@ -35,10 +34,11 @@ import { LanguageService } from '../../services/language.service';
 import { environment } from 'src/environments/environment';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 interface Beneficary {
   firstName: string;
-  lastName: string;
+  lastName: any;
   gender: string;
   stateID: string;
   districtID: string | null;
@@ -59,8 +59,8 @@ export class SearchComponent implements OnInit, DoCheck {
   countryId = environment.countryId;
   searched = false;
   beneficiaryList: any = [];
-  // filteredBeneficiaryList: any = [];
   filteredBeneficiaryList = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   blankTable = [{}, {}, {}, {}, {}];
   displayedColumns: string[] = [
     'beneficiaryID',
@@ -98,7 +98,7 @@ export class SearchComponent implements OnInit, DoCheck {
 
   callForMasterData() {
     this.commonService.getRegistrationData().subscribe((res) => {
-      if (res && res.statusCode == 200 && res.data) {
+      if (res && res.statusCode === 200 && res.data) {
         console.log(res);
         this.genders = res.data.m_genders;
         this.states = res.data.states;
@@ -114,7 +114,7 @@ export class SearchComponent implements OnInit, DoCheck {
     this.commonService
       .getStateDistricts(this.beneficiary.stateID)
       .subscribe((res) => {
-        if (res && res.data && res.statusCode == 200) {
+        if (res && res.data && res.statusCode === 200) {
           console.log(res);
           this.districts = res.data;
         } else {
@@ -126,7 +126,7 @@ export class SearchComponent implements OnInit, DoCheck {
   createBeneficiaryForm() {
     this.beneficiary = {
       firstName: '',
-      lastName: '',
+      lastName: null,
       gender: '',
       stateID: '',
       districtID: '',
@@ -137,8 +137,8 @@ export class SearchComponent implements OnInit, DoCheck {
     this.form.reset();
     this.beneficiaryList = [];
     this.filteredBeneficiaryList.data = [];
+    this.filteredBeneficiaryList.paginator = this.paginator;
     this.searched = false;
-    // this.getStatesData()
   }
 
   getSearchResult() {
@@ -162,10 +162,12 @@ export class SearchComponent implements OnInit, DoCheck {
         ) {
           this.beneficiaryList = [];
           this.filteredBeneficiaryList.data = [];
+          this.filteredBeneficiaryList.paginator = this.paginator;
           this.searched = true;
         } else {
           this.beneficiaryList = this.searchRestruct(beneficiaryList.data, {});
           this.filteredBeneficiaryList.data = this.beneficiaryList;
+          this.filteredBeneficiaryList.paginator = this.paginator;
           this.searched = true;
           console.log(this.beneficiaryList, this.filteredBeneficiaryList.data);
         }
@@ -176,9 +178,6 @@ export class SearchComponent implements OnInit, DoCheck {
     );
   }
 
-  /**
-   * ReStruct the response object of Identity Search to be as per search table requirements
-   */
   searchRestruct(benList: any, benObject: any) {
     const requiredBenData: any = [];
     benList.forEach((element: any, i: any) => {
@@ -206,7 +205,7 @@ export class SearchComponent implements OnInit, DoCheck {
       return phoneMaps.length > 0 ? phoneMaps[0].phoneNo : 'Not Available';
     } else if (benObject && benObject.phoneNo && phoneMaps.length > 0) {
       phoneMaps.forEach((element: any) => {
-        if (element.phoneNo == benObject.phoneNo) {
+        if (element.phoneNo === benObject.phoneNo) {
           phone = element.phoneNo;
         }
       });
@@ -226,7 +225,7 @@ export class SearchComponent implements OnInit, DoCheck {
           beneficiaryID: benID,
         })
         .subscribe((res) => {
-          if (res && res.statusCode == 200 && res.data) {
+          if (res && res.statusCode === 200 && res.data) {
             if (res.data.benVisitDetail && res.data.benVisitDetail.length) {
               this.mdDialogRef.close(benID);
             } else {

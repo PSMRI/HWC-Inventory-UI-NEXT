@@ -6,7 +6,10 @@
       </h4>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
         <input
           matInput
@@ -32,7 +35,10 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
         <input
           matInput
@@ -63,7 +69,7 @@
         >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
       >
     </div>
-    <div class="col-xs-12 col-sm-2 box">
+    <div class="col-xs-12 col-sm-2 box" style="margin-top: 15px">
       <button
         mat-raised-button
         [disabled]="
@@ -81,7 +87,7 @@
     <div class="col-xs-12">
       <mat-card class="m-b-40">
         <mat-card-content>
-          <div class="row">
+          <div class="">
             <div class="col-xs-12 text-right">
               <mat-form-field id="filterbox">
                 <input
@@ -95,94 +101,108 @@
                 <mat-icon matSuffix>search</mat-icon>
               </mat-form-field>
             </div>
-            <section class="col-xs-12 table-responsive">
-              <mat-table
+            <section
+              class="table-responsive mat_form_field_background_color_table"
+            >
+              <table
+                mat-table
                 [dataSource]="_filteredDispenseList"
                 class="mat-elevation-z8"
               >
                 <!-- S.No. Column -->
                 <ng-container matColumnDef="noValue">
-                  <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-                  <mat-cell *matCellDef="let element; let i = index">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element; let i = index">
                     {{ i + 1 }}
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <!-- Issue ID Column -->
                 <ng-container matColumnDef="issueID">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.issueID
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.issueID }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.patientIssueID }}</mat-cell
                   >
+                    {{ element?.patientIssueID }}
+                  </td>
                 </ng-container>
 
                 <!-- Patient Name Column -->
                 <ng-container matColumnDef="patientName">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.patientName
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.patientName }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.patientName }}</mat-cell
                   >
+                    {{ element?.patientName }}
+                  </td>
                 </ng-container>
 
                 <!-- Reference Column -->
                 <ng-container matColumnDef="reference">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.reference
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.reference }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.reference }}</mat-cell
                   >
+                    {{ element?.reference }}
+                  </td>
                 </ng-container>
 
                 <!-- Issue Type Column -->
                 <ng-container matColumnDef="issueType">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.issueType
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.issueType }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.issueType }}</mat-cell
                   >
+                    {{ element?.issueType }}
+                  </td>
                 </ng-container>
 
                 <!-- Created By Column -->
                 <ng-container matColumnDef="createdBy">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.createdBy
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.createdBy }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.createdBy }}</mat-cell
                   >
+                    {{ element?.createdBy }}
+                  </td>
                 </ng-container>
 
                 <!-- Created Date Column -->
                 <ng-container matColumnDef="createdDate">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.createdDate
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.createdDate }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{
-                      element?.createdDate | istDate: "dd/MM/yyyy"
-                    }}</mat-cell
                   >
+                    {{ element?.createdDate | istDate: "dd/MM/yyyy" }}
+                  </td>
                 </ng-container>
 
-                <mat-header-row
+                <tr
+                  mat-header-row
                   *matHeaderRowDef="[
                     'noValue',
                     'issueID',
@@ -192,9 +212,9 @@
                     'createdBy',
                     'createdDate'
                   ]"
-                >
-                </mat-header-row>
-                <mat-row
+                ></tr>
+                <tr
+                  mat-row
                   *matRowDef="
                     let row;
                     columns: [
@@ -208,8 +228,8 @@
                     ]
                   "
                   class="table-hover"
-                ></mat-row>
-              </mat-table>
+                ></tr>
+              </table>
               <div
                 *ngIf="
                   _filteredDispenseList &&
@@ -222,6 +242,12 @@
                   currentLanguageSet?.inventory?.norecordsfound
                 }}</strong>
               </div>
+              <mat-paginator
+                [hidden]="_filteredDispenseList.data.length === 0"
+                [pageSizeOptions]="[5, 10, 25]"
+                [pageSize]="5"
+                showFirstLastButtons
+              ></mat-paginator>
             </section>
           </div>
         </mat-card-content>

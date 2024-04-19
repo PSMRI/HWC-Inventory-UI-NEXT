@@ -24,7 +24,6 @@ import { Injectable, ViewContainerRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Observable } from 'rxjs';
 import { RxBatchViewComponent } from '../components/rx-batch-view/rx-batch-view.component';
-// import { RxBatchViewComponent } from '../components/rx-batch-view/rx-batch-view.component';
 
 @Injectable()
 export class BatchViewService {

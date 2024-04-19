@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './app-modules/core/services/auth-guard.service';
 import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
 import { ServiceComponent } from './service/service.component';
 import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
@@ -9,19 +8,8 @@ import { RedirInComponent } from './redir-in/redir-in.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SetPasswordComponent } from './set-password/set-password.component';
 import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
+import { AuthGuard } from './app-modules/core/services/auth-guard.service';
 
-// import { LoginComponent } from './login/login.component';
-// import { ServiceComponent } from './service/service.component';
-
-// import { SetPasswordComponent } from './set-password/set-password.component';
-// import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
-// import { ResetPasswordComponent } from './reset-password/reset-password.component';
-// import { AuthGuard } from './app-modules/core/services/auth-guard.service';
-// import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
-// import { RedirInComponent } from './redir-in/redir-in.component';
-
-// import { DashboardComponent } from './app-modules/inventory/dashboard/dashboard.component';
-// import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
 const routes: Routes = [
   {
     path: '',

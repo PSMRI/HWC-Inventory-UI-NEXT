@@ -20,9 +20,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import * as XLSX from 'xlsx';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 
@@ -51,7 +49,7 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
 
   today!: Date;
   minEndDate!: Date;
-  maxDate: any;
+  maxDate!: Date;
   maxEndDate!: Date;
   shortExpiryList = [];
   dateOffset: any;
@@ -79,8 +77,6 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
 
   searchReport() {
     const startDate: Date = new Date(this.shortExpiryForm.value.startDate);
-    // let endDate: Date = new Date(this.shortExpiryForm.value.endDate);
-
     startDate.setHours(0);
     startDate.setMinutes(0);
     startDate.setSeconds(0);
@@ -103,7 +99,7 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
           'Json data of response: ',
           JSON.stringify(response, null, 4),
         );
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.shortExpiryList = response.data;
           this.getResponseOfSearchThenDo();
         }
@@ -111,7 +107,7 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
   }
 
   downloadReport(downloadFlag: boolean) {
-    if (downloadFlag == true) {
+    if (downloadFlag === true) {
       this.searchReport();
     }
   }
@@ -119,20 +115,19 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
   getResponseOfSearchThenDo() {
     const criteria: any = [];
     criteria.push({ Filter_Name: 'Start_Date', value: this.startDate });
-    // criteria.push({ 'Filter_Name': 'End_Date', 'value': this.endDate });
     this.exportToxlsx(criteria);
   }
   exportToxlsx(criteria: any) {
     if (criteria.length > 0) {
       const criteriaArray = criteria.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (criteriaArray.length != 0) {
+      if (criteriaArray.length !== 0) {
         this.criteriaHead = Object.keys(criteriaArray[0]);
         console.log('this.criteriaHead', this.criteriaHead);
       }
@@ -140,13 +135,13 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
     if (this.shortExpiryList.length > 0) {
       const array = this.shortExpiryList.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (array.length != 0) {
+      if (array.length !== 0) {
         const head = Object.keys(array[0]);
         console.log(' head', head);
         const wb_name = 'Short Expiry Report';
@@ -164,7 +159,7 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
           }
           const cellPosition = String.fromCharCode(j);
           let finalCellName: any;
-          if (count == 0) {
+          if (count === 0) {
             finalCellName = cellPosition + '1';
             console.log(finalCellName);
           } else {
@@ -175,7 +170,7 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
           const newName = this.modifyHeader(head, i);
           // delete report_worksheet[finalCellName].w; report_worksheet[finalCellName].v = newName;
           i++;
-          if (i == 91 + count * 26) {
+          if (i === 91 + count * 26) {
             // i = 65;
             count++;
           }

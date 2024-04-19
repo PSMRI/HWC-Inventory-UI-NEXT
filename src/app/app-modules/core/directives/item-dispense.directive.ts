@@ -29,9 +29,8 @@ import {
 
 import { NgControl, FormGroup } from '@angular/forms';
 
-// import { ItemDispenseComponent } from './../components/item-dispense/item-dispense.component';
+import { ItemDispenseComponent } from './../components/item-dispense/item-dispense.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ItemDispenseComponent } from '../components/item-dispense/item-dispense.component';
 
 @Directive({
   selector: '[appItemDispense]',
@@ -48,7 +47,7 @@ export class ItemDispenseDirective {
   }
 
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
 
   constructor(
@@ -62,8 +61,8 @@ export class ItemDispenseDirective {
     console.log(this.stockForm);
 
     const dialogRef = this.dialog.open(ItemDispenseComponent, {
-      // width: '80%',
-      // height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, dispenseItemList: this.dispenseItemList },
     });

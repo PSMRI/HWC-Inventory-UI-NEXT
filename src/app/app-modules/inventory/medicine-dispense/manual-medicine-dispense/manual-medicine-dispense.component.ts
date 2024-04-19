@@ -27,6 +27,7 @@ import {
   EventEmitter,
   OnChanges,
   DoCheck,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { InventoryService } from './../../shared/service/inventory.service';
@@ -39,6 +40,7 @@ import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-la
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-manual-medicine-dispense',
   templateUrl: './manual-medicine-dispense.component.html',
@@ -59,6 +61,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
   dataSource = new MatTableDataSource<any>();
   batchNumberDataList: any = [];
   otherData: any = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   displayedColumns: string[] = [
     'SNo',
     'itemName',
@@ -139,9 +142,6 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     return this.manualItemDispenseForm.controls['quantityInHand'].value;
   }
 
-  // manualDispenseList: any = [];
-  // manualDispenseList = new MatTableDataSource<any>();
-
   selectBatch() {
     const batchList = <FormArray>(
       this.manualItemDispenseForm.controls['batchList']
@@ -165,7 +165,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     };
     this.inventoryService.getItemBatchList(requestObjectGetBatchList).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           if (response.data.length > 0) {
             itemBatchList = response.data;
             this.openModalTOSelectBatch(editIndex, formValue, itemBatchList);
@@ -185,6 +185,8 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
   }
 
   openModalTOSelectBatch(editIndex: any, formValue: any, itemBatchList: any) {
+    console.log('formValue', formValue);
+    this.inventoryService.dialogClosed();
     const mdDialogRef: MatDialogRef<SelectBatchComponent> = this.dialog.open(
       SelectBatchComponent,
       {
@@ -193,6 +195,8 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
           editBatch: formValue,
           editIndex: editIndex,
         },
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         disableClose: false,
       },
@@ -200,21 +204,37 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     mdDialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         console.log("result['batchList']", result.value['batchList']);
-        if (editIndex != null) {
+        if (editIndex !== null) {
+          this.batchNumberDataList = [];
+          this.otherData = [];
           this.manualDispenseList.data.splice(editIndex, 1);
           this.manualDispenseList.data.push(result.value);
+          this.manualDispenseList.paginator = this.paginator;
+          this.manualDispenseList.data.forEach((manualDispenseItem: any) => {
+            this.batchNumberDataList = [];
+            this.otherData = [];
+            manualDispenseItem.batchList.forEach((batchItem: any) => {
+              this.batchNumberDataList.push(batchItem.batchNo);
+              this.otherData.push(batchItem.quantityOfDispense);
+            });
+            manualDispenseItem['batchNo'] = this.batchNumberDataList;
+            manualDispenseItem['quantityOfDispense'] = this.otherData;
+            console.log('manualDispenseList', this.manualDispenseList.data);
+          });
           this.manualItemDispenseForm.reset();
         } else {
           this.manualDispenseList.data.push(result.value);
-          this.manualDispenseList.data.forEach((item: any) => {
-            this.manualDispenseList.data[0].batchList.forEach((item: any) => {
-              this.batchNumberDataList.push(item.batchNo);
-              this.otherData.push(item.quantityOfDispense);
+          this.manualDispenseList.paginator = this.paginator;
+          this.manualDispenseList.data.forEach((manualDispenseItem: any) => {
+            this.batchNumberDataList = [];
+            this.otherData = [];
+            manualDispenseItem.batchList.forEach((batchItem: any) => {
+              this.batchNumberDataList.push(batchItem.batchNo);
+              this.otherData.push(batchItem.quantityOfDispense);
             });
-            this.manualDispenseList.data.forEach((element: any) => {
-              element['batchNo'] = this.batchNumberDataList;
-              element['quantityOfDispense'] = this.otherData;
-            });
+            manualDispenseItem['batchNo'] = this.batchNumberDataList;
+            manualDispenseItem['quantityOfDispense'] = this.otherData;
+            console.log('manualDispenseList', this.manualDispenseList.data);
           });
           this.manualItemDispenseForm.reset();
         }
@@ -224,6 +244,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
 
   removeManualDispenseItem(i: any) {
     this.manualDispenseList.data.splice(i, 1);
+    this.manualDispenseList.paginator = this.paginator;
   }
 
   editItem(item: any, i: any) {
@@ -263,7 +284,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     console.log('dispensingItem', dispensingItem);
     this.inventoryService.saveStockExit(dispensingItem).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           if (print) {
             this.saveAndPrintPage();
           } else {
@@ -272,6 +293,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
               'success',
             );
             this.manualDispenseList.data = [];
+            this.manualDispenseList.paginator = this.paginator;
             this.manualItemDispenseForm.reset();
             this.resetBeneficiaryDetails();
           }
