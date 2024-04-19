@@ -66,6 +66,7 @@ import { IndentDispenseDirective } from './directives/indent-dispense.directive'
 import { ShowCommitAndVersionDetailsComponent } from './components/show-commit-and-version-details/show-commit-and-version-details.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { BatchSearchService } from './services/batch-search.service';
+import { BeneficiaryDetailsService } from './services/beneficiary-details.service';
 
 
 
@@ -202,7 +203,7 @@ export class CoreModule {
         ItemSearchService,
         HttpInterceptorService,
         BatchSearchService,
-        // BeneficiaryDetailsService,
+        BeneficiaryDetailsService,
         // {
         //   provide: Http,
         //   useFactory: HttpInterceptorFactory,

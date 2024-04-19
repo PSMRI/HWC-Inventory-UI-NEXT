@@ -21,9 +21,6 @@
  */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
-  Params,
-  RouterModule,
-  Routes,
   Router,
   ActivatedRoute,
   NavigationStart,
@@ -72,9 +69,6 @@ export class RedirInComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // localStorage.clear();
-
-    // sessionStorage.clear();
     sessionStorage.removeItem('parentBen');
     sessionStorage.removeItem('parentBenVisit');
     sessionStorage.removeItem('isExternal');
@@ -101,6 +95,7 @@ export class RedirInComponent implements OnInit {
   }
 
   getExternalSession() {
+    console.log("this.route.queryParams", this.route.queryParams);
     this.route.queryParams.subscribe((params) => {
       this.externalSession.host =
         params['host'] === 'undefined' ? undefined : params['host'];
@@ -134,7 +129,7 @@ export class RedirInComponent implements OnInit {
           : params['serviceName'];
       this.externalSession.parentAPI =
         params['parentAPI'] === 'undefined' ? undefined : params['parentAPI'];
-      this.externalSession.currentLanguage =
+        this.externalSession.currentLanguage =
         params['currentLanguage'] === 'undefined'
           ? 'English'
           : params['currentLanguage'];
@@ -142,8 +137,6 @@ export class RedirInComponent implements OnInit {
         params['healthID'] === 'undefined' ? undefined : params['healthID'];
     });
     console.log('PSMRI', this.externalSession);
-
-    // this.savetoStorage();
     this.storeSession();
   }
 
@@ -222,21 +215,15 @@ export class RedirInComponent implements OnInit {
     localStorage.removeItem('parkingPlaceID');
     localStorage.removeItem('vanID');
     localStorage.removeItem('inventoryServiceName');
-
-    // localStorage.removeItem('benRegID');
-
     localStorage.removeItem('facilityDetail');
   }
 
   getSession() {
     this.authService.getSessionExists().subscribe((res) => {
-      if (res && res.statusCode == 200) {
+      if (res && res.statusCode === 200) {
         this.checkANDSetAuthenticatedDetails(res.data);
-      } else if (res.statusCode == 5002) {
-        // sessionStorage.clear();
-        // localStorage.clear();
+      } else if (res.statusCode === 5002) {
         this.deleteParentSessioning();
-
         console.log(res, 'fallback');
         window.location.href = this.fallback;
       }
@@ -252,9 +239,9 @@ export class RedirInComponent implements OnInit {
     let serviceData;
     if (loginDataResponse.previlegeObj) {
       serviceData = loginDataResponse.previlegeObj.filter((item: any) => {
-        return item.serviceName == this.externalSession.inventoryServiceName;
+        return item.serviceName === this.externalSession.inventoryServiceName;
       })[0];
-      if (serviceData != null) {
+      if (serviceData !== null) {
         this.checkMappedRoleForService(loginDataResponse, serviceData);
       }
     } else {
@@ -324,9 +311,8 @@ export class RedirInComponent implements OnInit {
     this.authService
       .getFacilityDetails(this.externalSession.facility)
       .subscribe((res) => {
-        if (res && res.statusCode == 200 && res.data) {
+        if (res && res.statusCode === 200 && res.data) {
           localStorage.setItem('facilityDetail', JSON.stringify(res.data));
-          // this.router.navigate(['/inventory/medicineDispense']);
           this.router.navigate([
             '/rx/disperse/' + this.externalSession.benRegID,
           ]);

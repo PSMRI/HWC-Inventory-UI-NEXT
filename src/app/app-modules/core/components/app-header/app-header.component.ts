@@ -45,7 +45,7 @@ export class AppHeaderComponent implements OnInit, OnChanges, AfterContentChecke
   reportsList:any = [];
   languageArray: any;
   language_file_path: any = "./assets/";
-  language: any = "English";
+  language: any = 'English';
   currentLanguageSet: any;
   navigation: any;
   updateCSSToShowActivePharmacist= false;
@@ -381,8 +381,8 @@ export class AppHeaderComponent implements OnInit, OnChanges, AfterContentChecke
     sessionStorage.removeItem("return");
     localStorage.removeItem("facilityDetail");
     let language: any;
-    if (localStorage.getItem("currentLanguage") == "undefined") {
-      language = "English";
+    if (localStorage.getItem("currentLanguage") === "undefined") {
+      language = 'English';
     } else {
       language = localStorage.getItem("currentLanguage");
     }
