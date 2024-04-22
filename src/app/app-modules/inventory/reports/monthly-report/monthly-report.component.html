@@ -8,9 +8,9 @@
   <div class="m-b-10">
     <div class="col-12">
       <form [formGroup]="monthlyForm" class="row">
-        <div class="col-4 box">
+        <div class="col-3 box">
           <mat-form-field
-            class="input-full-width mat_form_field_background_margin mat_form_field_background_color"
+            class="input-full-width  "
           >
             <mat-label>
               {{ currentLanguageSet?.inventory?.selectmonth }}
@@ -29,9 +29,9 @@
           </mat-form-field>
         </div>
 
-        <div class="col-4 box">
+        <div class="col-3 box">
           <mat-form-field
-            class="input-full-width mat_form_field_background_margin mat_form_field_background_color"
+            class="input-full-width  "
           >
             <mat-label>
               {{ currentLanguageSet?.inventory?.selectyear }}
@@ -49,9 +49,9 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <mat-form-field
-            class="input-full-width mat_form_field_background_margin mat_form_field_background_color"
+            class="input-full-width  "
           >
             <mat-label>
               {{ currentLanguageSet?.inventory?.facility }}
@@ -63,20 +63,21 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div class="col-3" style="text-align:start;margin-top: 20px;">
+          <button
+            mat-raised-button
+            color="accent"
+            class="mat_green"
+            type="submit"
+            [disabled]="!monthlyForm.valid"
+            (click)="downloadReport(true)"
+          >
+            {{ currentLanguageSet?.inventory?.download }}
+          </button>
+        </div>
       </form>
     </div>
 
-    <div class="m-t-10 col-12" style="text-align: end">
-      <button
-        mat-raised-button
-        color="accent"
-        class="mat_green"
-        type="submit"
-        [disabled]="!monthlyForm.valid"
-        (click)="downloadReport(true)"
-      >
-        {{ currentLanguageSet?.inventory?.download }}
-      </button>
-    </div>
+    
   </div>
 </div>

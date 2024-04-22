@@ -16,17 +16,20 @@
       <div class="row m-t-10">
         <div class="col-xs-6 col-sm-3">
           <div class="row m-t-10">
-            <mat-select
+            <mat-form-field>
+              <mat-label>{{ currentLanguageSet?.inventory?.item }}</mat-label>
+              <mat-select
               class="input-full-width"
               name="itemName"
               id="itemName"
               formControlName="itemName"
-              placeholder="{{ currentLanguageSet?.inventory?.item }}"
             >
               <mat-option *ngFor="let item of filterItemList" [value]="item">
                 {{ item.itemName }}
               </mat-option>
             </mat-select>
+            </mat-form-field>
+            
           </div>
         </div>
       </div>

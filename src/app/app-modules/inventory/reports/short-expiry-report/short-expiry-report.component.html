@@ -5,11 +5,11 @@
     </div>
   </div>
 
-  <div class="m-b-10">
-    <form [formGroup]="shortExpiryForm">
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+  <div class="m-b-10 col-12">
+    <form [formGroup]="shortExpiryForm" class="row">
+      <div class="col-3">
         <mat-form-field
-          class="input-full-width mat_form_field_background_color mat_form_field_background_width"
+          class="input-full-width "
         >
           <mat-label>
             {{ currentLanguageSet?.inventory?.date }}
@@ -35,17 +35,18 @@
           ></mat-datepicker>
         </mat-form-field>
       </div>
+      <div class="col-3" style="text-align: start;margin-top: 20px;">
+        <button
+          mat-raised-button
+          color="accent"
+          class="mat_green"
+          type="submit"
+          (click)="downloadReport(true)"
+        >
+          {{ currentLanguageSet?.inventory?.download }}
+        </button>
+      </div>
     </form>
-    <div class="m-t-10 col-12" style="text-align: end">
-      <button
-        mat-raised-button
-        color="accent"
-        class="mat_green"
-        type="submit"
-        (click)="downloadReport(true)"
-      >
-        {{ currentLanguageSet?.inventory?.download }}
-      </button>
-    </div>
+    
   </div>
 </div>

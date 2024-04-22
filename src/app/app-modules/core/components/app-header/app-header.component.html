@@ -23,7 +23,9 @@
         </li>
         <li *ngIf="isAuthenticated" class="nav-item alignDropDown">
           <select
-            style="font-size: 13px"
+            style="font-size: 18px;
+            padding: 8px;
+            border-radius: 20px;"
             class="menu-font drop-arrow border-radius-20 height-30 width120px pull-right"
             name="language"
             [(ngModel)]="language"
@@ -46,7 +48,7 @@
           <img
             src="assets/images/user1.png"
             alt="user"
-            style="padding: 5px"
+            style="padding: 10px;color: #ffffff;"
             [matMenuTriggerFor]="userInfo"
           />
           <mat-menu
@@ -70,7 +72,7 @@
         </li>
         <li
           class="nav-item"
-          style="margin-top: 9px"
+          style="margin-top: 9px;margin-right: 5px;"
           *ngIf="userName"
           matTooltip="{{ currentLanguageSet?.inventory?.user }}"
         >
@@ -85,7 +87,7 @@
         <li
           class="nav-item cursorPointer"
           *ngIf="isAuthenticated"
-          style="margin-top: 6px"
+          style="margin-top: 10px;margin-right:5px;"
         >
           <mat-icon
             alt="Help"
@@ -109,7 +111,7 @@
         <li
           *ngIf="providerServiceID && !isExternal && storeName"
           class="nav-item servicePoint cursorPointer"
-          style="margin-top: 6px"
+          style="margin-top: 10px;margin-right: 5px;"
           [routerLink]="'/facility'"
           matTooltip="{{ currentLanguageSet?.inventory?.storeSelection }}"
         >
@@ -126,13 +128,15 @@
         <li
           *ngIf="isAuthenticated && !isExternal"
           class="nav-item logout cursorPointer"
-          style="margin-top: 6px"
+          style="margin-top: 10px;margin-right: 5px;"
           matTooltip="{{ currentLanguageSet?.inventory?.logout }}"
         >
           <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
           <a tabindex="{0}" (click)="logout()">
             <mat-icon color="warn">power_settings_new</mat-icon>
           </a>
+          <!-- <mat-label>{{ currentLanguageSet?.inventory?.logout }}</mat-label> -->
+
         </li>
       </ul>
     </div>
@@ -147,10 +151,9 @@
           <!-- <li class="nav-item" *ngIf="!isExternal"> -->
 
           <button class="nav-btn" mat-button [matMenuTriggerFor]="items">
-            <mat-icon matSuffix style="margin-top: 10px; margin-right: -5px"
-              >keyboard_arrow_down</mat-icon
-            >
+            
             {{ item.role }}
+            <span class="caret"></span>
           </button>
           <mat-menu
             class="role-menu"

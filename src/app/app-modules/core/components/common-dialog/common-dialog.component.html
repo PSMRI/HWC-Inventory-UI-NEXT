@@ -29,10 +29,10 @@
   <h3 class="title info">{{ message }}</h3>
   <div class="message">
     <mat-form-field [style.width]="'100%'">
+      <mat-label>{{ currentLanguageSet?.inventory?.enterRemarks }}</mat-label>
       <input
         autocomplete="off"
         matInput
-        placeholder="{{ currentLanguageSet?.inventory?.enterRemarks }}"
         name="Remarks"
         #remarksRef
       />
@@ -56,10 +56,10 @@
   <h3 class="title info">{{ message }}</h3>
   <div class="message">
     <mat-form-field [style.width]="'100%'">
+      <mat-label>{{ currentLanguageSet?.inventory?.enterRemarks }}</mat-label>
       <textarea
         matInput
         matTextareaAutosize
-        placeholder="{{ currentLanguageSet?.inventory?.enterRemarks }}"
         name="Remarks"
         maxLength="500"
         #remarksRef

@@ -50,9 +50,7 @@
         margin-top: 3px;
     }
 }
-.mat_form_field_background_color >>> .mdc-text-field--filled, .mdc-text-field--focused {
-    background-color: #f2f2f0 !important;
-}
+
 .mat_form_field_background_color_table >>> .mdc-text-field--filled, .mdc-text-field--focused {
     /* background-color: #f9f9f9 !important; */
     background-color:unset !important;

@@ -16,9 +16,7 @@
             [readonly]="true"
             matInput
             [(ngModel)]="prescribed"
-            placeholder="{{
-              currentLanguageSet?.itemDispense?.prescribedQuantity
-            }}"
+           
           />
         </mat-form-field>
       </div>
@@ -34,9 +32,7 @@
             name="dispensed"
             matInput
             [(ngModel)]="dispensed"
-            placeholder="{{
-              currentLanguageSet?.itemDispense?.dispenseQuantity
-            }}"
+            
           />
         </mat-form-field>
       </div>
@@ -73,7 +69,7 @@
                 class="col-md-2 right-padding-remove-desktop left-padding-remove-desktop"
               >
                 <mat-form-field
-                  class="input-full-width mat_form_field_background_color"
+                  class="input-full-width "
                 >
                   <mat-label>{{
                     currentLanguageSet?.itemDispense?.batchNo
@@ -85,16 +81,14 @@
                     readonly="true"
                     name="batchNo"
                     formControlName="batchNo"
-                    placeholder="{{
-                      currentLanguageSet?.itemDispense?.batchNo
-                    }}"
+                   
                   />
                 </mat-form-field>
               </div>
 
               <div class="col-md-2">
                 <mat-form-field
-                  class="input-full-width mat_form_field_background_color"
+                  class="input-full-width "
                 >
                   <mat-label>{{
                     currentLanguageSet?.itemDispense?.quantityinHand
@@ -106,15 +100,13 @@
                     readonly="true"
                     name="quantityInHand"
                     formControlName="quantityInHand"
-                    placeholder="{{
-                      currentLanguageSet?.itemDispense?.quantityinHand
-                    }}"
+                   
                   />
                 </mat-form-field>
               </div>
               <div class="col-md-3">
                 <mat-form-field
-                  class="input-full-width mat_form_field_background_color"
+                  class="input-full-width "
                   (click)="enableBatch(batch.value, i)"
                 >
                   <mat-label>{{
@@ -137,7 +129,6 @@
               <div class="col-md-2">
                 <mat-form-field
                   [style.width]="'100%'"
-                  class="mat_form_field_background_color"
                 >
                   <mat-label>{{
                     currentLanguageSet?.itemDispense?.expiryDate
@@ -145,9 +136,6 @@
                   <input
                     matInput
                     readonly
-                    placeholder="{{
-                      currentLanguageSet?.itemDispense?.expiryDate
-                    }}"
                     allowText="alphaspace"
                     formControlName="expiryDate"
                   />
