@@ -28,3 +28,6 @@ h4 {
     font-weight: bold;
     color: #52575C !important;
 }
+.mat_form_field_background_width >>>.mat-mdc-text-field-wrapper {
+    width: 200% !important;
+}

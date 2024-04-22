@@ -7,14 +7,13 @@
     </div>
     <div class="col-xs-12 col-sm-3 box">
       <mat-form-field
-        class="input-full-width mat_form_field_background_color"
+        class="input-full-width "
         style="padding: 2px"
       >
         <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
         <input
           matInput
           [matDatepicker]="fromDatePicker"
-          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
           [(ngModel)]="fromDate"
           [max]="today"
           #startDate="ngModel"
@@ -29,14 +28,13 @@
     </div>
     <div class="col-xs-12 col-sm-3 box">
       <mat-form-field
-        class="input-full-width mat_form_field_background_color"
+        class="input-full-width "
         style="padding: 2px"
       >
         <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
         <input
           matInput
           [matDatepicker]="toDatePicker"
-          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
           [(ngModel)]="toDate"
           [max]="today"
           #endDate="ngModel"

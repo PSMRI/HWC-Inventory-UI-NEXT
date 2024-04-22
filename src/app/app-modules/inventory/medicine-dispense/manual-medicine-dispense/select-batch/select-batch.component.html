@@ -66,10 +66,10 @@
                   [formGroup]="batch"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.itemDispense?.batchNo
+                    }}</mat-label>
                     <mat-select
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.batchNo
-                      }}"
                       formControlName="batchNo"
                       (selectionChange)="
                         getQuantityAndFilterItem($event, i, batch)
@@ -96,12 +96,12 @@
                   [formGroup]="batch"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.qtyinBatch
+                    }}</mat-label>
                     <input
                       autocomplete="off"
                       required
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.qtyinBatch
-                      }}"
                       matInput
                       defaultNull
                       allowText="number"
@@ -123,12 +123,12 @@
                   [formGroup]="batch"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.qtytoDispensed
+                    }}</mat-label>
                     <input
                       autocomplete="off"
                       required
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.qtytoDispensed
-                      }}"
                       matInput
                       defaultNull
                       allowText="number"
@@ -156,15 +156,15 @@
                   [formGroup]="batch"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.itemDispense?.expiryDate
+                    }}</mat-label>
                     <input
                       matInput
                       [matDatepicker]="expiryDatePicker"
                       autocomplete="off"
                       required
                       matInput
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.expiryDate
-                      }}"
                       name="expiryDate"
                       formControlName="expiryDate"
                       [readonly]="true"

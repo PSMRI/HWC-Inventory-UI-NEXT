@@ -16,8 +16,9 @@
         <div class="row" *ngIf="questionsection">
           <form #form1="ngForm">
             <div class="col-xs-12 col-sm-12">
-              <mat-select
-                placeholder="Question 1"
+              <mat-form-field>
+                <mat-label>Question 1</mat-label>
+                <mat-select
                 [(ngModel)]="question1"
                 name="question1"
                 [style.width]="'100%'"
@@ -32,15 +33,17 @@
                   {{ question.Question }}
                 </mat-option>
               </mat-select>
+              </mat-form-field>
+              
             </div>
             <div class="col-xs-12 col-sm-12 m-t-10">
               <mat-form-field style="width: 100%">
+                <mat-label>Answer 1</mat-label>
                 <input
                   autocomplete="off"
                   allowText="answerValidator"
                   id="ans1"
                   matInput
-                  placeholder="Answer 1"
                   [(ngModel)]="answer1"
                   name="answer1"
                   required
@@ -50,8 +53,9 @@
           </form>
           <form #form2="ngForm">
             <div class="col-xs-12 col-sm-12 m-t-25">
-              <mat-select
-                placeholder="Question 2"
+              <mat-form-field>
+                <mat-label>Question 2</mat-label>
+                <mat-select
                 [disabled]="!form1.valid"
                 [(ngModel)]="question2"
                 name="question2"
@@ -67,16 +71,18 @@
                   {{ question.Question }}
                 </mat-option>
               </mat-select>
+              </mat-form-field>
+              
             </div>
             <div class="col-xs-12 col-sm-12 m-t-10">
               <mat-form-field style="width: 100%">
+                <mat-label>Answer 2</mat-label>
                 <input
                   autocomplete="off"
                   id="ans2"
                   allowText="answerValidator"
                   matInput
                   [disabled]="!form1.valid"
-                  placeholder="Answer 2"
                   [(ngModel)]="answer2"
                   name="answer2"
                   required
@@ -86,8 +92,10 @@
           </form>
           <form #form3="ngForm">
             <div class="col-xs-12 col-sm-12 m-t-25">
+              <mat-form-field>
+                <mat-label>Question 3</mat-label>
+              </mat-form-field>
               <mat-select
-                placeholder="Question 3"
                 [disabled]="!form2.valid"
                 [(ngModel)]="question3"
                 name="question3"
@@ -105,12 +113,12 @@
             </div>
             <div class="col-xs-12 col-sm-12 m-t-10">
               <mat-form-field style="width: 100%">
+                <mat-label>Answer 3</mat-label>
                 <input
                   autocomplete="off"
                   id="ans3"
                   allowText="answerValidator"
                   matInput
-                  placeholder="Answer 3"
                   [disabled]="!form2.valid"
                   [(ngModel)]="answer3"
                   name="answer3"
@@ -138,6 +146,7 @@
           <div class="row" *ngIf="passwordSection">
             <div class="col-xs-12 col-sm-12">
               <mat-form-field style="width: 100%">
+                <mat-label>New Password</mat-label>
                 <mat-icon
                   matPrefix
                   class="mat-icon material-icons"
@@ -150,7 +159,6 @@
                   autocomplete="off"
                   matInput
                   type="{{ dynamictype }}"
-                  placeholder="New Password"
                   [(ngModel)]="newpwd"
                   name="newpwd"
                   required
@@ -169,6 +177,7 @@
             </div>
             <div class="col-xs-12 col-sm-12">
               <mat-form-field style="width: 100%">
+                <mat-label>Confirm Password</mat-label>
                 <mat-icon
                   matPrefix
                   class="mat-icon material-icons"
@@ -181,7 +190,6 @@
                   autocomplete="off"
                   matInput
                   type="{{ dynamictype }}"
-                  placeholder="Confirm Password"
                   [(ngModel)]="confirmpwd"
                   name="confirmpwd"
                   required

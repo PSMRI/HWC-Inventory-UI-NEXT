@@ -8,9 +8,9 @@
   <div class="m-b-10">
     <div class="col-12">
       <form [formGroup]="beneficiaryDrugIssueForm" class="row">
-        <div class="col-4">
+        <div class="col-3">
           <mat-form-field
-            class="input-full-width mat_form_field_background_color mat_form_field_background_width"
+            class="input-full-width mat_form_field_background_width"
           >
             <mat-label>
               {{ currentLanguageSet?.inventory?.startDate }}
@@ -32,9 +32,9 @@
             <mat-datepicker [style.width]="'100%'" #picker></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <mat-form-field
-            class="input-full-width mat_form_field_background_color mat_form_field_background_width"
+            class="input-full-width mat_form_field_background_width"
           >
             <mat-label>
               {{ currentLanguageSet?.inventory?.endDate }}
@@ -56,20 +56,21 @@
             <mat-datepicker [style.width]="'100%'" #pickerEnd></mat-datepicker>
           </mat-form-field>
         </div>
+        <div class="col-3" style="text-align:start;margin-top: 20px;">
+          <button
+            mat-raised-button
+            class="mat_green"
+            color="accent"
+            type="submit"
+            [disabled]="!beneficiaryDrugIssueForm.valid"
+            (click)="downloadReport(true)"
+          >
+            {{ currentLanguageSet?.inventory?.download }}
+          </button>
+        </div>
       </form>
     </div>
 
-    <div class="m-t-10 col-12" style="text-align: end">
-      <button
-        mat-raised-button
-        class="mat_green"
-        color="accent"
-        type="submit"
-        [disabled]="!beneficiaryDrugIssueForm.valid"
-        (click)="downloadReport(true)"
-      >
-        {{ currentLanguageSet?.inventory?.download }}
-      </button>
-    </div>
+    
   </div>
 </div>

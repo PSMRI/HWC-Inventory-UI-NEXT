@@ -34,7 +34,7 @@
               <div class="row">
                 <div class="col-md-1 right-padding-remove-desktop">
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.form
@@ -45,13 +45,12 @@
                       type="text"
                       matInput
                       formControlName="drugForm"
-                      placeholder="{{ currentLanguageSet?.itemDispense?.form }}"
                     />
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.duration
@@ -62,9 +61,7 @@
                       type="text"
                       matInput
                       formControlName="durationView"
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.duration
-                      }}"
+                      
                     />
                   </mat-form-field>
                 </div>
@@ -72,7 +69,7 @@
                   class="col-md-2 left-padding-remove-desktop right-padding-remove-desktop"
                 >
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.frequency
@@ -83,15 +80,13 @@
                       type="text"
                       matInput
                       formControlName="frequency"
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.frequency
-                      }}"
+                     
                     />
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.dose
@@ -102,13 +97,12 @@
                       type="text"
                       matInput
                       formControlName="dose"
-                      placeholder="{{ currentLanguageSet?.itemDispense?.dose }}"
                     />
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.quantityPrescribed
@@ -119,15 +113,13 @@
                       type="text"
                       matInput
                       formControlName="qtyPrescribed"
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.quantityPrescribed
-                      }}"
+                      
                     />
                   </mat-form-field>
                 </div>
                 <div class="col-md-3">
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.quantityDispensed
@@ -139,26 +131,24 @@
                       matInput
                       allowText="number"
                       formControlName="qtyDispensed"
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.quantityDispensed
-                      }}"
+                      
                       allowMax="drug.value.qtyPrescribed"
                     />
                   </mat-form-field>
                 </div>
                 <div class="col-md-4 right-padding-remove-desktop">
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
+                  <mat-label>{{
+                    currentLanguageSet?.itemDispense?.route
+                  }}</mat-label>
                     <input
                       autocomplete="off"
                       readonly="true"
                       type="text"
                       matInput
                       formControlName="route"
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.route
-                      }}"
                     />
                   </mat-form-field>
                 </div>
@@ -169,17 +159,17 @@
                   }"
                 >
                   <mat-form-field
-                    class="input-full-width mat_form_field_background_color"
+                    class="input-full-width "
                   >
+                  <mat-label>{{
+                    currentLanguageSet?.itemDispense?.specialInstructions
+                  }}</mat-label>
                     <input
                       autocomplete="off"
                       type="text"
                       matInput
                       [readonly]="true"
                       formControlName="specialInstruction"
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.specialInstructions
-                      }}"
                     />
                   </mat-form-field>
                 </div>

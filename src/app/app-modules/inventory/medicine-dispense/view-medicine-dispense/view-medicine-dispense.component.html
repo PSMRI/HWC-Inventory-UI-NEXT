@@ -7,7 +7,7 @@
     </div>
     <div class="col-xs-12 col-sm-3 box">
       <mat-form-field
-        class="input-full-width mat_form_field_background_color"
+        class="input-full-width "
         style="padding: 2px"
       >
         <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
@@ -20,7 +20,6 @@
           readonly="true"
           [min]="_minDate"
           [max]="_today"
-          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
           required="true"
           id="from-input"
           [(ngModel)]="_dateRange[0]"
@@ -36,7 +35,7 @@
     </div>
     <div class="col-xs-12 col-sm-3 box">
       <mat-form-field
-        class="input-full-width mat_form_field_background_color"
+        class="input-full-width "
         style="padding: 2px"
       >
         <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
@@ -50,7 +49,6 @@
           readonly="true"
           [min]="_dateRange[0]"
           [max]="_today"
-          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
           required="true"
           id="to-input"
           [(ngModel)]="_dateRange[1]"
@@ -90,10 +88,10 @@
           <div class="">
             <div class="col-xs-12 text-right">
               <mat-form-field id="filterbox">
+                <mat-label>{{ currentLanguageSet?.common?.inTableSearch }}</mat-label>
                 <input
                   autocomplete="off"
                   matInput
-                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
                   [(ngModel)]="filterTerm"
                   name="filterTerm"
                   (keyup)="filterConsumptionList(filterTerm)"

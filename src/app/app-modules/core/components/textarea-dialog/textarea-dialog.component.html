@@ -1,12 +1,12 @@
 <div mat-dialog-content>
   <mat-form-field class="textarea-full-width">
+    <mat-label>{{ currentLanguageSet?.inventory?.typeyourdata }}</mat-label>
     <textarea
       matInput
       matTextareaAutosize
       matAutosizeMinRows="5"
       #message
       [maxlength]="data.length"
-      placeholder="{{ currentLanguageSet?.inventory?.typeyourdata }}"
       [(ngModel)]="data.observations"
     ></textarea>
     <mat-hint align="end"
