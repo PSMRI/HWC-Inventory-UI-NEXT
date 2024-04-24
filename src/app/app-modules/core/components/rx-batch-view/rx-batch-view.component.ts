@@ -171,7 +171,7 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
       quantityInHand: batch.qty || batch.quantityInHand,
       expiresIn: batch.expiresIn,
       itemStockEntryID: batch.itemStockEntryID,
-      selection: batch.selection || selection === '1' ? true : false,
+      selection: batch.selection || selection === 1 ? true : false,
     });
   }
 
