@@ -102,11 +102,6 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
     this.initIndentItemList();
     this.loadIndentData();
-    // this.indentItemListArray = this.indentRequestForm.value.indentItemList;
-    // console.log(
-    //   'this.indentItemListArray**********from indent',
-    //   this.indentItemListArray,
-    // );
   }
 
   methodForIndentEdit() {
@@ -180,26 +175,14 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       itemList?.patchValue({ requiredQty: null });
       itemList?.markAsPristine();
     }
-    // else if (itemList.value.qOH < quantity) {
-    //   this.confirmationService.alert('Please enter quantity less than or equal to Qty in qoh')
-    //   itemList.patchValue({ requiredQty: null });
-    //   itemList.markAsPristine();
-    // }
   }
 
   get indentItemList() {
     return this.indentRequestForm.get('indentItemList') as FormArray;
   }
   addToindentItemList() {
-    // const IndentItemListArray = this.indentRequestForm.controls[
-    //   'indentItemList'
-    // ] as FormArray;
-    // IndentItemListArray.push(this.initIndentItemList());
     this.indentItemList.push(this.loadIndentItemList());
     this.loadIndentData();
-    // IndentItemListArray.push(
-    //   this.loadIndentItemList()
-    // );
   }
 
   loadIndentItemList() {
@@ -230,12 +213,6 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     const IndentItemListArray = this.indentRequestForm.get(
       'indentItemList',
     ) as FormArray;
-    // const stockForm = this.physicalStockEntryForm.get(
-    //   'physicalStock',
-    // ) as FormArray;
-
-    // if (IndentItemListArray.length > 1)
-
     if (IndentItemListArray.length > 1) {
       this.deleted = true;
       const temp = {

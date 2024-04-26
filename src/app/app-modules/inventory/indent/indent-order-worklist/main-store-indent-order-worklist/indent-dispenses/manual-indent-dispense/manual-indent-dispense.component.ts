@@ -167,62 +167,6 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
         },
         disableClose: false,
       });
-    // matDialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     console.log('Result', result);
-
-    //     if (editIndex !== null) {
-    //       this.manualDispenseList.data.splice(editIndex, 1);
-    //       this.manualDispenseList.data.push(result);
-    //       console.log(
-    //         'this.manualDispenseList***********',
-    //         JSON.stringify(this.manualDispenseList, null, 4),
-    //       );
-    //       this.manualDispenseList.paginator = this.paginator;
-    //       this.manualDispenseList.data.forEach((manualDispenseItem: any) => {
-    //         this.batchNumberDataList = [];
-    //         this.otherData = [];
-    //         manualDispenseItem.batchDetails.batchList.forEach(
-    //           (batchItem: any) => {
-    //             this.batchNumberDataList.push(batchItem.batchNo);
-    //             this.otherData.push(batchItem.quantityOfDispense);
-    //           },
-    //         );
-    //         manualDispenseItem['batchNo'] = this.batchNumberDataList;
-    //         manualDispenseItem['quantityOfDispense'] = this.otherData;
-    //         console.log('manualDispenseList', this.manualDispenseList.data);
-    //       });
-
-    //     } else {
-    //         this.manualDispenseList.data.push(result);
-    //       console.log("this.manualDispenseList.data under else with empty",this.manualDispenseList.data);
-    //       this.manualDispenseList.paginator = this.paginator;
-    //       this.manualDispenseList.data.forEach((manualDispenseItem: any) => {
-    //         this.batchNumberDataList = [];
-    //         this.otherData = [];
-    //         manualDispenseItem.batchDetails.batchList.forEach(
-    //           (batchItem: any) => {
-    //             this.batchNumberDataList.push(batchItem.batchNo);
-    //             this.otherData.push(batchItem.quantityOfDispense);
-    //           },
-    //         );
-    //         manualDispenseItem['batchNo'] = this.batchNumberDataList;
-    //         manualDispenseItem['quantityOfDispense'] = this.otherData;
-    //         console.log('manualDispenseList', this.manualDispenseList.data);
-    //       });
-    //       this.disableBatchSelcetion(
-    //         selectedItem,
-    //         this.mainStoreItemListForDispense,
-    //       );
-    //       this.manualDispenseList.data.push(result);
-    //       console.log(
-    //         'this.manualDispenseList*********** in else',
-    //         JSON.stringify(this.manualDispenseList.data),
-    //       );
-    //       }
-    //   }
-    // });
-
     matDialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Result', result);
