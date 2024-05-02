@@ -27,7 +27,7 @@ import {
   DoCheck,
 } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-// import { SetLanguageComponent } from '../set-language.component';
+import { SetLanguageComponent } from '../set-language.component';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -53,14 +53,11 @@ export class CommonDialogComponent implements OnInit {
   public mandatories: any;
 
   public provideDraftDesc!: boolean;
-
-  // Choose from Radio Button
   public choice!: boolean;
   public values: any;
   public selectedValue: any;
-  // Choose from Radio Button Ends
 
-  // languageComponent!: SetLanguageComponent;
+  languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 
   constructor(
@@ -88,7 +85,7 @@ export class CommonDialogComponent implements OnInit {
 
     if (timer && timer > 0) {
       this.intervalRef = setInterval(() => {
-        if (timer == 0) {
+        if (timer === 0) {
           clearInterval(this.intervalRef);
           this.dialogRef.close({ action: 'timeout' });
         } else {
@@ -117,9 +114,9 @@ export class CommonDialogComponent implements OnInit {
   }
 
   fetchLanguageResponse() {
-    // this.languageComponent = new SetLanguageComponent(this.http_service);
-    // this.languageComponent.setLanguage();
-    // this.currentLanguageSet = this.languageComponent.currentLanguageObject;
+    this.languageComponent = new SetLanguageComponent(this.http_service);
+    this.languageComponent.setLanguage();
+    this.currentLanguageSet = this.languageComponent.currentLanguageObject;
   }
   // -----End------
 }

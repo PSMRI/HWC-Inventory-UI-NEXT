@@ -19,17 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
-import { NgControl } from '@angular/forms';
-// import { IndentItemListComponent } from '../components/indent-item-list/indent-item-list.component';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
+import { IndentItemListComponent } from '../components/indent-item-list/indent-item-list.component';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { InventoryService } from '../../inventory/shared/service/inventory.service';
 
 @Directive({
   selector: '[appIndentRequest]',
@@ -39,52 +33,55 @@ export class IndentRequestDirective {
   previousSelected: any;
 
   @Input()
-  itemListForm!: any;
-  // itemListForm!: FormGroup;
+  // itemListForm!: any;
+  itemListForm!: FormGroup;
 
   @HostListener('keyup.enter') onKeyDown() {
     this.openDialog();
   }
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
   constructor(
     private el: ElementRef,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private inventoryService: InventoryService,
   ) {}
 
   openDialog(): void {
-    const searchTerm = this.itemListForm.itemNameView;
-    // const dialogRef = this.dialog.open(IndentItemListComponent, {
-    //   width: '80%',
-    //   //   height: '90%',
-    //   panelClass: 'fit-screen',
-    //   data: { searchTerm: searchTerm, addedIndent: this.previousSelected },
-    // });
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     const formArray = this.itemListForm.parent as FormArray;
-    //     const len = formArray.length;
-    //     for (let i = len - 1, j = 0; i < len + result.length - 1; i++, j++) {
-    //       (<FormGroup>formArray.at(i)).controls['itemID'].setValue(
-    //         result[j].itemID,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['itemName'].setValue(
-    //         result[j].itemName,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['qOH'].setValue(result[j].qoh);
-    //       (<FormGroup>formArray.at(i)).controls['itemNameView'].setValue(
-    //         result[j].itemName,
-    //       );
-    //       (<FormGroup>formArray.at(i)).controls['itemNameView'].disable();
-    //       (<FormGroup>formArray.at(i)).markAsDirty();
+    // const searchTerm = this.itemListForm.itemNameView;
+    const searchTerm = this.itemListForm.controls['itemNameView'].value;
+    const dialogRef = this.dialog.open(IndentItemListComponent, {
+      width: '1200px',
+      height: 'auto',
+      panelClass: 'fit-screen',
+      data: { searchTerm: searchTerm, addedIndent: this.previousSelected },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const formArray = this.itemListForm.parent as FormArray;
+        const len = formArray.length;
+        for (let i = len - 1, j = 0; i < len + result.length - 1; i++, j++) {
+          (<FormGroup>formArray.at(i)).controls['itemID'].setValue(
+            result[j].itemID,
+          );
+          (<FormGroup>formArray.at(i)).controls['itemName'].setValue(
+            result[j].itemName,
+          );
+          (<FormGroup>formArray.at(i)).controls['qOH'].setValue(result[j].qoh);
+          (<FormGroup>formArray.at(i)).controls['itemNameView'].setValue(
+            result[j].itemName,
+          );
+          (<FormGroup>formArray.at(i)).controls['itemNameView'].disable();
+          (<FormGroup>formArray.at(i)).markAsDirty();
 
-    //       if (formArray.length < len + result.length - 1)
-    //         formArray.push(this.initIndentRequestList());
-    //     }
-    //   }
-    // });
+          if (formArray.length < len + result.length - 1)
+            formArray.push(this.initIndentRequestList());
+          this.inventoryService.dialogClosed();
+        }
+      }
+    });
   }
   initIndentRequestList() {
     return this.fb.group({

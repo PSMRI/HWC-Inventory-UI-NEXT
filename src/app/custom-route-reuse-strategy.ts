@@ -3,12 +3,12 @@ import { RouteReuseStrategy, DefaultUrlSerializer, ActivatedRouteSnapshot, Detac
 export class CustomRouteReuseStrategy implements RouteReuseStrategy {
   handlers: { [key: string]: DetachedRouteHandle } = {};
 
-  routesToBeReuse = []
+  routesToBeReuse: any = [];
   // "medicineDispense/View", "storeSelfConsumption/View", "physicalStockEntry/View", "storeStockTransfer/View", "storeStockAdjustment/view", "storeStockAdjustmentDraft/view"
 
   calcKey(route: ActivatedRouteSnapshot) {
-    let next = route;
-    let url = "";
+    let next: any = route;
+    let url = '';
     while (next) {
       if (next.url) {
         url = next.url.join('/');
@@ -40,16 +40,23 @@ export class CustomRouteReuseStrategy implements RouteReuseStrategy {
       return false;
     }
     const url = this.calcKey(route);
-    return !!route.routeConfig && !route.routeConfig.loadChildren && !!this.handlers[this.calcKey(route)];
+    return (
+      !!route.routeConfig &&
+      !route.routeConfig.loadChildren &&
+      !!this.handlers[this.calcKey(route)]
+    );
   }
 
-  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
+  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
     if (!route.routeConfig) return null;
     if (route.routeConfig.loadChildren) return null;
     return this.handlers[this.calcKey(route)];
   }
 
-  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+  shouldReuseRoute(
+    future: ActivatedRouteSnapshot,
+    curr: ActivatedRouteSnapshot,
+  ): boolean {
     return this.calcKey(curr) === this.calcKey(future);
   }
 

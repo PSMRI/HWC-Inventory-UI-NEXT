@@ -1,0 +1,30 @@
+
+.search-btn {
+    cursor: pointer;
+}
+.m-r-5 {
+    margin-right: 5px;
+}
+
+.width5 {
+    width: 5%;
+}
+
+.width10 {
+    width: 10%;
+}
+
+.width15 {
+    width: 15%;
+}
+
+
+/* mat-header-cell{
+    flex: none;
+    justify-content: center;
+   
+} */
+th.mat-header-cell {
+    text-align: center !important;
+  }
+

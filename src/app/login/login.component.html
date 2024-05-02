@@ -7,22 +7,24 @@
         <div class="row no-gutters mdContent" style="text-align: center;">
           <div class="col-xs-1 col-md-1 col-sm-1 m-t-25">
             <!-- <span class="material-icons formIcons">account_box</span> -->
-            <img src="assets/images/UsernameIcon.png" alt="UsernameIcon">
+            <img src="assets/images/UsernameIcon.png" alt="UsernameIcon" style=" margin-top: 40px;">
           </div>
           <div class="col-xs-11 col-md-11 col-sm-11">
             <mat-form-field class="full-width">
-              <input autocomplete="off" allowText="usernameValidator" matInput type="text" id="userID" placeholder="Enter User Name" [(ngModel)]="userName" name="userName" />
+              <mat-label>Enter User Name</mat-label>
+              <input autocomplete="off" allowText="usernameValidator" matInput type="text" id="userID" [(ngModel)]="userName" name="userName" />
             </mat-form-field>
           </div>
         </div>
         <div class="row no-gutters mdContent" style="text-align: center;">
           <div class="col-xs-1 col-md-1 col-sm-1 m-t-25">
             <!-- <span class="material-icons formIcons">lock</span> -->
-            <img src="assets/images/PasswordIcon.png" alt="UsernameIcon">
+            <img src="assets/images/PasswordIcon.png" alt="UsernameIcon" style="margin-top: 40px;">
           </div>
           <div class="col-xs-11 col-md-11 col-sm-11">
             <mat-form-field class="full-width">
-              <input autocomplete="off" matInput [type]="dynamictype" id="password" placeholder="Enter Password" [(ngModel)]="password" name="password" />
+              <mat-label>Enter Password</mat-label>
+              <input autocomplete="off" matInput [type]="dynamictype" id="password" [(ngModel)]="password" name="password" />
               <mat-icon matSuffix class="mat-icon material-icons cursorPointer" role="img" aria-hidden="true" matTooltip="Show Password" (mousedown)='showPWD()' (touchstart)='showPWD()' (mouseup)='hidePWD()' (touchend)='showPWD()' style="color:gray">visibility</mat-icon>
             </mat-form-field>
           </div>
@@ -34,8 +36,8 @@
         </div>
         <div class="row m-t-25 mdContent">
           <div class="col-xs-12 col-sm-3"></div>
-          <div class="col-xs-12 col-sm-9">
-            <a class="cursorPointer f-c-54 font-regular pull-right password" routerLink="/reset-password">Forgot Password?</a>
+          <div class="col-xs-12 col-sm-9" >
+            <a class="cursorPointer f-c-54 font-regular pull-right password" style="float: inline-end;" routerLink="/reset-password">Forgot Password?</a>
           </div>
         </div>
     </div>

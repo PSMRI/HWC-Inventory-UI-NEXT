@@ -39,7 +39,6 @@ import { AppRoutingModule } from "./app-routing.module";
 //   import { from } from 'rxjs/observable/from';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from "./app-modules/core/core.module";
-import { AuthService } from "./app-modules/core/services/auth.service";
 import { HttpInterceptorService } from "./app-modules/core/services/http-interceptor.service";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LanguageService } from "./app-modules/core/services/language.service";
@@ -63,17 +62,27 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MaterialModule } from "./app-modules/core/material.module";
 import { LoginComponent } from "./login/login.component";
+import { FaciltyService } from "./facility-selection/facilty.service";
+import { FacilitySelectionComponent } from "./facility-selection/facility-selection.component";
+import { ServiceComponent } from "./service/service.component";
+import { LoadStoreDetailsComponent } from "./load-store-details/load-store-details.component";
+import { RedirInComponent } from "./redir-in/redir-in.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
+import { SetPasswordComponent } from "./set-password/set-password.component";
+import { SetSecurityQuestionsComponent } from "./set-security-questions/set-security-questions.component";
+import { AuthService } from "./app-modules/core/services/auth.service";
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    // ServiceComponent,
-    // ResetPasswordComponent,
-    // SetPasswordComponent,
-    // SetSecurityQuestionsComponent,
-    // FacilitySelectionComponent,
-    // RedirInComponent,
-    // LoadStoreDetailsComponent,
+    ServiceComponent,
+    ResetPasswordComponent,
+    SetPasswordComponent,
+    SetSecurityQuestionsComponent,
+    FacilitySelectionComponent,
+    RedirInComponent,
+    LoadStoreDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,7 +123,7 @@ import { LoginComponent } from "./login/login.component";
       useClass: HttpInterceptorService,
       multi: true,
     },
-    // FaciltyService,
+    FaciltyService,
     // { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }
   ],
   bootstrap: [AppComponent]

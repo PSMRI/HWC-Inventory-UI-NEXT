@@ -19,16 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-// import { ItemSearchComponent } from '../components/item-search/item-search.component';
+import { ItemSearchComponent } from '../components/item-search/item-search.component';
 
 @Directive({
   selector: '[appItemSearch]',
@@ -42,7 +36,7 @@ export class ItemSearchDirective {
   }
 
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
 
   constructor(
@@ -52,26 +46,24 @@ export class ItemSearchDirective {
 
   openDialog(): void {
     const searchTerm = this.stockForm.controls['itemName'].value;
-    // const dialogRef = this.dialog.open(ItemSearchComponent, {
-    //   width: '80%',
-    //   height: '90%',
-    //   panelClass: 'fit-screen',
-    //   data: { searchTerm: searchTerm },
-    // });
+    const dialogRef = this.dialog.open(ItemSearchComponent, {
+      width: '1200px',
+      height: 'auto',
+      panelClass: 'fit-screen',
+      data: { searchTerm: searchTerm },
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     console.log('result', result);
-    //     this.stockForm.controls['itemName'].setValue(result.itemName);
-    //     this.stockForm.controls['itemName'].disable();
-    //     this.stockForm.controls['itemID'].setValue(result.itemID);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('result', result);
+        this.stockForm.controls['itemName'].setValue(result.itemName);
+        this.stockForm.controls['itemName'].disable();
+        this.stockForm.controls['itemID'].setValue(result.itemID);
 
-    //     if (this.stockForm.controls['isMedical'])
-    //       this.stockForm.controls['isMedical'].setValue(result.isMedical);
-    //     this.stockForm.markAsDirty();
-    //   } else {
-    //     // this.stockForm.control.parent.reset();
-    //   }
-    // });
+        if (this.stockForm.controls['isMedical'])
+          this.stockForm.controls['isMedical'].setValue(result.isMedical);
+        this.stockForm.markAsDirty();
+      }
+    });
   }
 }

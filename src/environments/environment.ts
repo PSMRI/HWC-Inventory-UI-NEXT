@@ -3,18 +3,18 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-const commonIP = "http://10.208.122.32:8080/";
-const inventoryIP = "http://10.208.122.32:8080/";
-const mmuIP = "http://10.208.122.38:8080/";
-const FHIRIP = "http://10.208.122.38:8080/";
+const commonIP = "http://183.82.107.186:8080/";
+const inventoryIP = "http://183.82.107.186:8080/";
+const mmuIP = "http://183.82.107.186:8080/";
+const FHIRIP = "http://183.82.107.186:8080/";
 // const COMMON_API_OPEN = `http://${IP}:8080/apiman-gateway/IEMR/Common/open/`;
 // const COMMON_API = `http://${IP}:8080/apiman-gateway/IEMR/Common/1.0/`;
 // const INVENTORY_API = `http://${IP}:8080/apiman-gateway/IEMR/Inventory/1.0/`;
 // const MMU_API = `http://${IP}:8080/apiman-gateway/IEMR/MMU/1.0/`;
 
-const COMMON_API_OPEN = `${commonIP}hwc-commonapi-v1.0/`;
-const COMMON_API = `${commonIP}hwc-commonapi-v1.0/`;
-const INVENTORY_API = `${inventoryIP}inventoryapi-v1.0/`;
+const COMMON_API_OPEN = `${commonIP}commonapi-v1.0/`;
+const COMMON_API = `${commonIP}commonapi-v1.0/`;
+const INVENTORY_API = `${inventoryIP}Inventoryapi-v1.0/`;
 const MMU_API = `${mmuIP}mmuapi-v1.0/`;
 const FHIR_API = `${FHIRIP}/fhirapi-v1.0/`;
 // const FHIR_API = `http://localhost:8080/fhirapi-v1.0/`;
@@ -57,9 +57,9 @@ export const environment = {
 
   getItem_Url: `${INVENTORY_API}getSubStoreitem/`,
 
-  savePhysicalStock_Url: `${INVENTORY_API}physicalStockEntry/`,
+  savePhysicalStock_Url: `${INVENTORY_API}physicalStockEntry`,
 
-  storeSelfConsumption: `${INVENTORY_API}storeSelfConsumption/`,
+  storeSelfConsumption: `${INVENTORY_API}storeSelfConsumption`,
 
   searchItemUrl: `${INVENTORY_API}itemPartialSearch`,
   searchBatchUrl: `${INVENTORY_API}itemBatchPartialSearch`,
@@ -82,7 +82,7 @@ export const environment = {
 
   saveStockExitUrl: `${INVENTORY_API}patientIssue`,
 
-  allocateBatchStockUrl: `${INVENTORY_API}allocateStockFromItemID/`,
+  allocateBatchStockUrl: `${INVENTORY_API}allocateStockFromItemID`,
   saveStoreTransferUrl: `${INVENTORY_API}storeTransfer`,
 
   saveStockAdjustmentUrl: `${INVENTORY_API}stockadjustment`,
@@ -114,16 +114,16 @@ export const environment = {
   updateIndentOrderUrl: `${INVENTORY_API}indentController/updateIndentOrder`,
 
   /* Report URL's*/
-  inwardStockReportUrl: `${INVENTORY_API}/crmReportController/getInwardStockReport`,
-  consumptionReportUrl: `${INVENTORY_API}/crmReportController/getConsumptionReport`,
-  expiryReportUrl: `${INVENTORY_API}/crmReportController/getExpiryReport`,
-  beneficiaryDrugIssueReportUrl: `${INVENTORY_API}/crmReportController/getBenDrugIssueReport`,
-  dailyStockDetailsReportUrl: `${INVENTORY_API}/crmReportController/getDailyStockDetailReport`,
-  dailyStockSummaryReportUrl: `${INVENTORY_API}/crmReportController/getDailyStockSummaryReport`,
-  monthlyReportUrl: `${INVENTORY_API}/crmReportController/getMonthlyReport`,
-  yearlyReportUrl: `${INVENTORY_API}/crmReportController/getYearlyReport`,
-  shortExpiryReportUrl: `${INVENTORY_API}/crmReportController/getShortExpiryReport`,
-  transitReportUrl: `${INVENTORY_API}/crmReportController/getTransitReport`,
+  inwardStockReportUrl: `${INVENTORY_API}crmReportController/getInwardStockReport`,
+  consumptionReportUrl: `${INVENTORY_API}crmReportController/getConsumptionReport`,
+  expiryReportUrl: `${INVENTORY_API}crmReportController/getExpiryReport`,
+  beneficiaryDrugIssueReportUrl: `${INVENTORY_API}crmReportController/getBenDrugIssueReport`,
+  dailyStockDetailsReportUrl: `${INVENTORY_API}crmReportController/getDailyStockDetailReport`,
+  dailyStockSummaryReportUrl: `${INVENTORY_API}crmReportController/getDailyStockSummaryReport`,
+  monthlyReportUrl: `${INVENTORY_API}crmReportController/getMonthlyReport`,
+  yearlyReportUrl: `${INVENTORY_API}crmReportController/getYearlyReport`,
+  shortExpiryReportUrl: `${INVENTORY_API}crmReportController/getShortExpiryReport`,
+  transitReportUrl: `${INVENTORY_API}crmReportController/getTransitReport`,
   licenseUrl: `${COMMON_API}license.html`,
   apiVersionUrl: `${INVENTORY_API}version`,
   getLanguageList: `${COMMON_API}beneficiary/getLanguageList`,

@@ -31,7 +31,7 @@ import { AbstractControl, ValidatorFn, NgControl } from '@angular/forms';
 
 @Directive({
   selector:
-    '[appAllowText][formControlName],[appAllowText][formControl],[appAllowText][ngModel],[appAllowText]',
+    '[app-allowText][formControlName],[allowText][formControl],[allowText][ngModel],[allowText]',
 })
 export class StringValidatorDirective {
   @Input()
@@ -67,7 +67,7 @@ export class StringValidatorDirective {
   validate(input: any) {
     const patternCode = this.allowText.trim();
 
-    if (input == null || input == '') return false;
+    if (input === null || input === '') return false;
 
     switch (patternCode) {
       case 'alphabet':
@@ -139,9 +139,7 @@ export class StringValidatorDirective {
     const maxlength = event.target.maxLength;
 
     const inserted = this.findDelta(val, lastVal);
-    // get removed chars
     const removed = this.findDelta(lastVal, val);
-    // determine if user pasted content
     const pasted = inserted.length >= 1 || (!inserted && !removed);
 
     if (maxlength > 0 && val.length > maxlength) {
