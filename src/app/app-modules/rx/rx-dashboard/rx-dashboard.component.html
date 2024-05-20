@@ -10,7 +10,8 @@
     <div class="example-scrolling-content content">
       <div class="container-fluid">
         <div class="row">
-          <mat-radio-group
+          <div class="col-6">
+            <mat-radio-group
             [(ngModel)]="issueType"
             class="radio-group pull-left"
           >
@@ -31,7 +32,8 @@
               {{ currentLanguageSet?.itemDispense?.manualIssue }}
             </mat-radio-button>
           </mat-radio-group>
-          <button
+          </div>
+          <div class="col-6"><button
             mat-raised-button
             *ngIf="issueType === 1 && !prescribedList?.allocated"
             class="btn-green pull-right"
@@ -41,7 +43,7 @@
             type="button"
           >
             {{ currentLanguageSet?.inventory?.allocateBatch }}
-          </button>
+          </button></div>
         </div>
         <div class="row m-t-20" *ngIf="prescription">
           <mat-accordion>
