@@ -728,3 +728,8 @@ table thead tr th {
   z-index: 1;
   font-weight: bold !important;
 }
+.mat-mdc-fab.mat-primary, .mat-mdc-mini-fab.mat-primary {
+  --mdc-fab-container-color: #336CFB !important;
+  --mdc-fab-icon-color: white;
+  --mat-mdc-fab-color: #fff;
+}
